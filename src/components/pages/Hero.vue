@@ -4,9 +4,7 @@
 			<div class="absolute -z-10 pointer-events-none inset-0 overflow-hidden">
 				<div class="absolute -z-1 -top-[128%] sm:-top-[107%] xl:-top-[73%] left-1/2 -translate-x-1/2 -u-z-10 hero-circle-gradient w-full h-[1282px] rounded-full md:max-w-[1282px]" />
 				<div class="absolute -z-1 -top-[112%] sm:-top-[93%] xl:-top-[62%] left-1/2 -translate-x-1/2 -u-z-10 hero-circle-gradient w-full h-[1046px] rounded-full md:max-w-[1046px]" />
-				<div class="absolute top-0 left-1/2 -translate-x-1/2 -u-z-10">
-					<!-- <img src="/blur-02.svg" alt="blur" class="max-w-none"> -->
-				</div>
+
 				<div class="absolute top-0 left-1/2 -translate-x-1/2 -u-z-10">
 					<img src="/blur-01.svg" alt="blur" class="max-w-none">
 				</div>
