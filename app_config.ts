@@ -6,7 +6,7 @@
 export default {
     keepalive: true,
     head: {
-        title: 'Bookings - Simplified Bookings, Amplified Business',
+        title: 'Goals - Achieve your goals faster with actionable todo',
         htmlAttrs: { lang: 'en' },
         viewport: 'width=device-width,initial-scale=1,viewport-fit=cover',
         bodyAttrs: { class: 'overflow-x-hidden' },
@@ -19,38 +19,38 @@ export default {
             },
             {
                 name: 'title',
-                content: 'Bookings - Simplified Bookings, Amplified Business'
+                content: 'Goals - Achieve your goals faster with actionable todo'
             },
             {
                 name: 'description',
-                content: 'Create personalized booking pages, manage appointments effortlessly, and get paid seamlessly. Tailored for African entrepreneurs, perfect for everyone.'
+                content: 'Generates a list of actionable steps and to-do to achieve your goals'
             },
             {
                 name: 'twitter:title',
-                content: 'Bookings - Simplified Bookings, Amplified Business'
+                content: 'Goals - Achieve your goals faster with actionable todo'
             },
-            { name: 'twitter:image', content: 'https://bookings.taaskly.site/og2.png' },
+            { name: 'twitter:image', content: 'https://Goals.taaskly.site/og2.png' },
             {
                 name: 'twitter:description',
-                content: 'Create personalized booking pages, manage appointments effortlessly, and get paid seamlessly. Tailored for African entrepreneurs, perfect for everyone.'
+                content: 'Generates a list of actionable steps and to-do to achieve your goals.'
             },
             { name: 'twitter:card', content: 'summary_large_image' },
             { name: 'twitter:site', content: '@kromate_24' },
             { name: 'twitter:creator', content: '@kromate_24' },
             {
                 property: 'og:title',
-                content: 'Bookings | Simplified Bookings, Amplified Business'
+                content: 'Goals | Achieve your goals faster with actionable todo'
             },
             { name: 'google-site-verification', content: 'tWttF6w3RHPlNPm5u7KSRgh4lgkRUZ2Bwl6QzECjY18' },
             { property: 'og:type', content: 'website' },
-            { property: 'og:url', content: 'https://bookings.taaskly.site/' },
-            { property: 'og:image', content: 'https://bookings.taaskly.site/og2.png' },
-            { property: 'og:image:secure_url', content: 'https://bookings.taaskly.site/og2.png' },
+            { property: 'og:url', content: 'https://goals.taaskly.site/' },
+            { property: 'og:image', content: 'https://goals.taaskly.site/og2.png' },
+            { property: 'og:image:secure_url', content: 'https://goals.taaskly.site/og2.png' },
             { property: 'og:image:type', content: 'image/png' },
-            { property: 'og:site_name', content: 'Bookings' },
+            { property: 'og:site_name', content: 'Goals' },
             {
                 property: 'og:description',
-                content: 'Create personalized booking pages, manage appointments effortlessly, and get paid seamlessly. Tailored for African entrepreneurs, perfect for everyone.'
+                content: 'Generates a list of actionable steps and to-do to achieve your goals.'
             },
 
             { name: 'format-detection', content: 'telephone=no' }
