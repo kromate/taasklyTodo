@@ -39,5 +39,8 @@ export default {
       }
     }
   },
+  runtimeConfig: {
+     openaiApiKey: process.env.OPENAI_API_KEY
+  },
   app
 }

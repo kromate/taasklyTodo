@@ -79,6 +79,8 @@ background-image: radial-gradient(#0000006c 1px, #ffffff 0.8px);
 background-size: 16px 16px;
 }
 
+
+
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }

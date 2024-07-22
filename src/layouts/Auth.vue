@@ -1,5 +1,6 @@
 <template>
-	<div class="layout-body polkadot">
+	<div class="layout-body bg-[#e0e7ff] isolate">
+		<BG />
 		<section class="flex min-h-screen h-full w-full container items-center justify-center">
 			<slot />
 		</section>

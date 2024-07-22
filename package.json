@@ -14,11 +14,14 @@
     "deploy": "firebase deploy --only functions"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^0.0.37",
+    "@ai-sdk/vue": "^0.0.21",
     "@headlessui/vue": "^1.7.22",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.7",
     "@vueuse/core": "^10.7.0",
     "@vueuse/nuxt": "^9.3.1",
+    "ai": "^3.2.33",
     "date-fns": "^3.6.0",
     "firebase": "^9.12.1",
     "firebase-admin": "^11.2.1",
@@ -33,7 +36,8 @@
     "sass": "^1.69.5",
     "uuid": "^9.0.0",
     "vue": "^3.4.27",
-    "vue-router": "^4.3.2"
+    "vue-router": "^4.3.2",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@nuxt/devtools": "^0.6.7",

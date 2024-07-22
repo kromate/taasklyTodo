@@ -18,7 +18,7 @@
 
     .input {
         border-width: var(--border);
-        @apply w-full bg-transparent text-dark h-12 px-4 rounded-md outline-none  border-dark focus:shadow transition-all duration-200 ease-in;
+        @apply w-full bg-transparent text-dark h-12 px-4 rounded-lg outline-none  border-dark focus:shadow transition-all duration-200 ease-in;
     }
 
     .input-field {
@@ -38,7 +38,7 @@
     }
 
     .auth-box {
-        @apply w-[450px] mx-auto relative max-w-[100%] bg-light px-9 py-7 flex flex-col items-center gap-4  rounded-md border;
+        @apply w-[450px] mx-auto relative max-w-[100%] bg-[#f8f9fc6c] px-9 py-7 flex flex-col items-center gap-4  rounded-md border border-dark;
         -webkit-perspective: 1000px;
         perspective: 1000px;
         -webkit-transform-style: preserve-3d;
@@ -49,15 +49,15 @@
         @apply font-light text-2xl text-center flex w-full items-center justify-center relative text-dark;
     }
         .btn {
-            @apply rounded-md px-8 py-3 flex justify-center items-center font-medium disabled:bg-gray-500 disabled:text-dark disabled:cursor-not-allowed  box-border  border border-secondary hover:shadow-[4px_3.5px_0px_0px_#000] transite
+            @apply rounded-lg px-8 py-3 flex justify-center items-center font-medium disabled:bg-gray-500 disabled:text-dark disabled:cursor-not-allowed  box-border  border border-secondary hover:shadow-[4px_3.5px_0px_0px_#000] transite
         }
 
         .btn-sm {
-            @apply rounded-md px-4 py-1.5 flex justify-center items-center font-medium disabled:bg-gray-500 disabled:text-dark disabled:cursor-not-allowed  box-border  border border-secondary hover:shadow-[4px_3.5px_0px_0px_#000] transite
+            @apply rounded-lg px-4 py-1.5 flex justify-center items-center font-medium disabled:bg-gray-500 disabled:text-dark disabled:cursor-not-allowed  box-border  border border-secondary hover:shadow-[4px_3.5px_0px_0px_#000] transite
         }
 
         .btn-primary {
-        @apply btn bg-light;
+        @apply btn bg-dark text-light;
     }
 
     .btn-primary-inverse {

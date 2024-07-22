@@ -1,23 +1,32 @@
 <template>
-	<main class=" h-full container grid lg:grid-cols-2 gap-12 items-center justify-start  md:py-32 py-10">
-		<section class="md:text-start text-center px-4">
-			<h1 class="md:text-7xl text-5xl font-extrabold mb-4 pathway leading-[1.2]">
-				Booking Simplified
-			</h1>
-			<p class="md:text-2xl text-lg font-medium md:font-normal text-dark mb-8 ">
-				Create personalized booking pages, manage appointments effortlessly, and get paid seamlessly. Tailored for African entrepreneurs, perfect for everyone.
-			</p>
-			<div class="flex gap-4 items-center w-full justify-center md:justify-start">
-				<nuxt-link to="/booking-types" class="bg-black text-white md:py-4 py-3 md:px-6 px-8 rounded-md md:text-[17px]">
-					Create a booking page
-				</nuxt-link>
-				<!-- <a class="md:text-xl font-semibold underline " href="https://www.youtube.com/watch?v=f3XQRsgvRTU&ab_channel=Kromate" target="_blank" rel="noopener noreferrer">Watch a Demo</a> -->
+	<main class=" h-full container   md:py-24 py-10 overflow-hidden">
+		<div class="md:max-w-7xl mx-auto w-full overflow-hidden max-w-screen">
+			<div class="absolute -z-10 pointer-events-none inset-0 overflow-hidden">
+				<div class="absolute -z-1 -top-[128%] sm:-top-[107%] xl:-top-[73%] left-1/2 -translate-x-1/2 -u-z-10 hero-circle-gradient w-full h-[1282px] rounded-full md:max-w-[1282px]" />
+				<div class="absolute -z-1 -top-[112%] sm:-top-[93%] xl:-top-[62%] left-1/2 -translate-x-1/2 -u-z-10 hero-circle-gradient w-full h-[1046px] rounded-full md:max-w-[1046px]" />
+				<div class="absolute top-0 left-1/2 -translate-x-1/2 -u-z-10">
+					<!-- <img src="/blur-02.svg" alt="blur" class="max-w-none"> -->
+				</div>
+				<div class="absolute top-0 left-1/2 -translate-x-1/2 -u-z-10">
+					<img src="/blur-01.svg" alt="blur" class="max-w-none">
+				</div>
 			</div>
-		</section>
+		</div>
 
-		<section class="flex center items-start relative h-full m-5 ">
-			<img src="/hero.png" class="w-full absolute lg:-top-[160px] ">
-		</section>
+		<div class="mx-auto max-w-[900px] px-4 sm:px-8 xl:px-0 relative z-1 overflow-hidden max-w-screen text-center flex flex-col gap-4 center w-full">
+			<h1 class="text-dark mb-6 text-5xl font-extrabold sm:text-7xl max-w-[810px]">
+				Achieve Your Goals with Personalized Actionable Steps
+			</h1>
+			<p class="max-w-[900px] mx-auto mb-9 font-medium md:text-lg">
+				Our app provides you with a personalized list of actionable steps and to-dos to help you reach your goals efficiently. Say goodbye to feeling overwhelmed and hello to progress!
+			</p>
+			<div class=" relative  w-full md:max-w-[560px] flex flex-wrap">
+				<input type="text" class="input-field rounded-full !py-7 pr-36" placeholder="Enter your goal (e.g., Learn a new language)">
+				<button class="btn-sm bg-dark text-light rounded-full absolute top-2.5 right-4">
+					Generate
+				</button>
+			</div>
+		</div>
 	</main>
 </template>
 
@@ -25,3 +34,9 @@
 
 
 </script>
+
+<style scoped>
+input::placeholder {
+  @apply text-[#252525ea] font-semibold text-lg
+}
+</style>
