@@ -1,5 +1,6 @@
 <template>
 	<PagesHero />
+	<PagesSmartChecker />
 </template>
 
 <script setup lang="ts">

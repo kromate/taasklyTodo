@@ -34,7 +34,7 @@ export const useFirestore = (databaseName: string): Firestore => {
 
 export const auth = getAuth(useFirebase())
 export const defaultDb: Firestore = useFirestore('(default)')
-export const db: Firestore = is_dev ? useFirestore('(default)') : useFirestore('bookings')
+export const db: Firestore = is_dev ? useFirestore('(default)') : useFirestore('goals')
 export const storage = getStorage(useFirebase())
 export const functions = getFunctions(useFirebase(), 'us-central1')
 
@@ -48,3 +48,13 @@ if (import.meta.env.DEV) {
   connectStorageEmulator(storage, 'localhost', 9199)
 }
 
+
+
+// Generate a system instructions for the gemini api model that takes in a goal and return back a json result with the following {
+// is_smart: boolean [Check if the goal is S.M.A.R.T - Specific, Measurable, Achievable, Relevant, Time-bound]
+// new_goal: if is_smart return is true return null else generate a new smart goal
+// start_date: javascript new Date() ISO string
+// end_date:  javascript new Date() ISO string
+// reward: string [A reward for completing the goal]
+// timeline: Array of objects with the following structure {date: javascript new Date() ISO string, message: string, is_done:Boolean} [A timeline of the goal]
+// }
