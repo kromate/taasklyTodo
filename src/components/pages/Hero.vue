@@ -18,13 +18,13 @@
 			<p class="max-w-[900px] mx-auto mb-9 font-medium md:text-lg">
 				Our app provides you with a personalized list of actionable steps and to-dos to help you reach your goals efficiently. Say goodbye to feeling overwhelmed and hello to progress!
 			</p>
-			<div class=" relative  w-full md:max-w-[560px] flex flex-wrap">
+			<form class=" relative  w-full md:max-w-[560px] flex flex-wrap" @submit.prevent="checkIfGoalIsSmart">
 				<input v-model="userGoal" type="text" class="input-field rounded-full !py-7 pr-36" placeholder="Enter your goal (e.g., Learn a new language)">
 
-				<button class="btn-sm bg-dark text-light rounded-full absolute top-2.5 right-4" :disabled="!userGoal" @click="checkIfGoalIsSmart">
+				<button class="btn-sm bg-dark text-light rounded-full absolute top-2.5 right-4" type="submit" :disabled="!userGoal">
 					Generate
 				</button>
-			</div>
+			</form>
 		</div>
 	</main>
 </template>

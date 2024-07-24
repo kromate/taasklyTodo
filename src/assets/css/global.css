@@ -118,12 +118,12 @@ background-size: 16px 16px;
 }
 .glide_up-enter-active,
 .glide_up-leave-active {
-	transition: all 0.25s linear;
+	transition: all 0.25s ease-in;
 }
 .glide_up-enter-from,
 .glide_up-leave-to {
 	opacity: 0;
-	transform: translateY(500px);
+	transform: translateY(1200px);
 }
 .scale-enter-active,
 .scale-leave-active {
