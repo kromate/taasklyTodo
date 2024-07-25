@@ -1,30 +1,50 @@
 import { GoogleGenerativeAI } from '@google/generative-ai'
+import { systemPrompts } from './system_prompt'
 
 export default defineEventHandler(async (event) => {
-  const GEMINI_API_KEY = import.meta.env.GEMINI_API_KEY
-  if (!GEMINI_API_KEY) throw new Error('Missing GEMINI API key')
+  try {
+    const GEMINI_API_KEY = import.meta.env.GEMINI_API_KEY
+    if (!GEMINI_API_KEY) {
+      throw new Error('Missing GEMINI API key')
+    }
+
+    const { prompt, promptType } = await readBody(event)
+    if (!prompt || !promptType) {
+      throw new Error('Missing required parameters: prompt or promptType')
+    }
 
     const genAI = new GoogleGenerativeAI(GEMINI_API_KEY)
+    const systemInst = systemPrompts[promptType]
+    if (!systemInst) {
+      throw new Error(`Invalid promptType: ${promptType}`)
+    }
+
     const model = genAI.getGenerativeModel({
       model: 'gemini-1.5-flash',
       generationConfig: { responseMimeType: 'application/json' },
-      systemInstruction: ` You are a goal setting system. your goal is to help users set S.M.A.R.T goals. your users are mainly african mainly Nigerians
-      Receive a goal and assess if it is a SMART goal (Specific, Measurable, Achievable, Relevant, Time-bound). {
-has_error: boolean [check if a goal is given]
-error_msg: string [if has_error is true return an error message]
-is_smart: boolean [Check if the goal is S.M.A.R.T - Specific, Measurable, Achievable, Relevant, Time-bound]
-adjusted_goal: if is_smart return is true return  an adjusted goal if possible that is more SMART compliant else generate a new smart goal
-percentage: number [percentage of how smart the goal is]
-
-}
-  if it's not specific return a specific goal, if it's not measurable return a measurable goal, if it's not achievable return an achievable goal, if it's not relevant return a relevant goal, if it's not time-bound return a time-bound goal
-      `
+      systemInstruction: systemInst
     })
-    const { prompt } = await readBody(event)
 
-      const result = await model.generateContent(prompt)
-  const response = result.response
-  const text = response.text()
+    const result = await model.generateContent(prompt)
+    const response = result.response
+    const gemini_response = response.text()
 
-    return { response: text }
+    return gemini_response
+  } catch (error) {
+    console.error('Error in Gemini API handler:', error)
+
+    if (error instanceof Error) {
+      return createError({
+        statusCode: 500,
+        statusMessage: 'Internal Server Error',
+        message: error.message
+      })
+    } else {
+      return createError({
+        statusCode: 500,
+        statusMessage: 'Internal Server Error',
+        message: 'An unexpected error occurred'
+      })
+    }
+  }
 })

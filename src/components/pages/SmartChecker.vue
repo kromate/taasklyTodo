@@ -1,12 +1,12 @@
 <template>
 	<transition name="glide_up" appear>
-		<section v-if="isComponentOpen" class="h-screen w-screen bg-white absolute p-8 border border-dark flex flex-col gap-4">
-			<button class="btn-sm bg-dark text-light rounded-full absolute top-4 right-4 gap-2 text-xl" @click="isComponentOpen = false">
+		<section v-if="isComponentOpen" class="min-h-screen w-screen bg-white absolute md:p-8 p-4  flex flex-col items-center gap-4 pb-20 md:pb-32">
+			<button class="btn-sm bg-dark text-light rounded-full fixed top-4 right-4 gap-2 text-xl" @click="isComponentOpen = false">
 				<CircleX :size="18" />
 				Close
 			</button>
 			<div class="flex gap-4 items-center justify-center flex-wrap mt-16">
-				<h1 class="outline text-4xl text-center sm:text-left font-black sm:text-5xl md:text-4xl lg:text-6xl xl:text-7xl tracking-normal text-dark poppins w-full center">
+				<h1 class="outline text-4xl text-center font-black sm:text-5xl md:text-4xl lg:text-6xl xl:text-7xl tracking-normal text-dark poppins w-full center">
 					Checking if your goal is S.M.A.R.T?
 				</h1>
 			</div>
@@ -20,17 +20,55 @@
 				<li>Time-bound</li>
 			</ul>
 
-			<article class="border border-grey_four mx-auto p-4 px-8 shadow-md rounded-lg text-lg md:text-xl text-center">
-				<span class="font-bold">Goal:</span>
-				{{ userGoal }}
-			</article>
-			<article v-if="gemini_response && !loading" class="border border-grey_four mx-auto p-4 px-8 shadow-md rounded-lg text-lg md:text-xl text-center">
-				<span class="font-bold">AI Response:</span>
-				{{ gemini_response }}
-			</article>
 
-			<div v-if="loading" class="flex">
-				<Skeleton radius="12px" height="280px" width="700px" class=" mx-auto" />
+			<transition name="show" appear>
+				<div v-if="!loading && gemini_response?.has_error" class="flex flex-col gap-4 max-w-[560px] bg-[#f8c2c2] w-full border border-red mx-auto p-4 px-4 shadow-md rounded-lg  text-center">
+					<p class="text-base">
+						{{ gemini_response?.error_msg }}
+					</p>
+				</div>
+			</transition>
+			<transition name="show" appear>
+				<div v-if="userGoal && !loading && !hasUserGoalChanged" class="flex flex-col gap-4 max-w-[560px] w-full border border-line mx-auto p-4 px-4 shadow-md rounded-lg">
+					<div class="field">
+						<label for="email">Your Goal:</label>
+						<span class="card_ans">{{ userGoal }}</span>
+						<div class="flex flex-wrap gap-2.5 text-xs mt-2 items-center justify-start">
+							<span class="card_ans_sm"><b>Specific:</b>  {{ gemini_response?.is_specific }} </span>
+							<span class="card_ans_sm"><b>Measurable:</b>  {{ gemini_response?.is_measurable }} </span>
+							<span class="card_ans_sm"><b>Achievable:</b>  {{ gemini_response?.is_achievable }} </span>
+							<span class="card_ans_sm"><b>Relevant:</b>  {{ gemini_response?.is_relevant }} </span>
+							<span class="card_ans_sm"><b>Time-bound:</b>  {{ gemini_response?.is_time_bound }} </span>
+						</div>
+					</div>
+					<transition name="glide_up" appear>
+						<section v-if="gemini_response?.percentage" class="flex flex-col gap-4">
+							<div class="field">
+								<label for="email">How SMART is your Goal:</label>
+								<span class="card_ans">{{ smartPercentage }}%</span>
+							</div>
+							<div class="field">
+								<label for="email">Refined Goal:</label>
+								<span class="card_ans">{{ gemini_response?.adjusted_goal }}</span>
+							</div>
+						</section>
+					</transition>
+				</div>
+			</transition>
+
+
+
+			<div v-if="loading" class="flex px-4 w-full">
+				<Skeleton radius="12px" height="280px" width="700px" class=" mx-auto px-4 max-w-[90%]" />
+			</div>
+			<div class="fixed bottom-2.5 inset-x-0 bg-white pt-2.5 px-3 center">
+				<form class=" relative  w-full md:max-w-[560px] flex flex-wrap mt-auto" @submit.prevent="checkIfGoalIsSmart">
+					<input v-model="userGoal" type="text" class="input-field rounded-full !py-7 pr-36 " placeholder="Enter your goal (e.g., Learn a new language)">
+
+					<button class="btn-sm bg-dark text-light rounded-full absolute top-2.5 right-4" type="submit" :disabled="!userGoal || loading">
+						Generate
+					</button>
+				</form>
 			</div>
 		</section>
 	</transition>
@@ -42,7 +80,7 @@ import { CircleX } from 'lucide-vue-next'
 import { useSmartGoal } from '@/composables/goals/smart'
 
 
-const { isComponentOpen, loading, userGoal, gemini_response } = useSmartGoal()
+const { isComponentOpen, loading, userGoal, gemini_response, checkIfGoalIsSmart, hasUserGoalChanged, smartPercentage } = useSmartGoal()
 
 
 </script>
@@ -60,5 +98,30 @@ li::first-letter {
   font-weight: bold;
   color: #845bd8
 
+}
+
+.card_ans{
+@apply p-2 border border-line w-full rounded-md
+}
+.card_ans_sm{
+@apply px-2 py-1.5 border border-line w-auto rounded-md
+}
+
+.show-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.show-enter-from {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.show-leave-active {
+  transition: all 0.3s ease-in;
+}
+
+.show-leave-to {
+  opacity: 0;
+  transform: scale(0.5);
 }
 </style>

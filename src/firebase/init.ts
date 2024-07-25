@@ -50,13 +50,3 @@ if (import.meta.env.DEV) {
 
 
 
-// Generate a system instructions for the gemini api model that takes in a goal and return back a json result with the following {
-// has_error: boolean [check if a goal is given]
-// error_msg: string [if has_error is true return an error message]
-// is_smart: boolean [Check if the goal is S.M.A.R.T - Specific, Measurable, Achievable, Relevant, Time-bound]
-// new_goal: if is_smart return is true return null else generate a new smart goal
-// start_date: javascript new Date() ISO string
-// end_date:  javascript new Date() ISO string
-// reward: string [A reward for completing the goal]
-// timeline: Array of objects with the following structure {date: javascript new Date() ISO string, message: string, is_done:Boolean} [A timeline of the goal]
-// }
