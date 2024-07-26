@@ -80,7 +80,7 @@ export default defineEventHandler(async (event) => {
     if (error instanceof Error) {
       return createError({
         statusCode: 500,
-        statusMessage: 'Internal Server Error',
+        statusMessage: error.message,
         message: error.message
       })
     } else {

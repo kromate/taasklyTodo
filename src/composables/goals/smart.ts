@@ -4,7 +4,7 @@ import { useAlert } from '@/composables/core/notification'
 const isComponentOpen = ref(false)
 const ex_userGoal = ref('')
 const userGoal = ref('')
-const gemini_response = ref<GoalEvaluation | null>(null)
+const gemini_response = ref<GoalEvaluation | Record<string, any>>({})
 const loading = ref(false)
 
 
@@ -21,7 +21,7 @@ export const useSmartGoal = () => {
     const checkIfGoalIsSmart = async () => {
         loading.value = true
         isComponentOpen.value = true
-        gemini_response.value = null
+        gemini_response.value = {}
 
         try {
             const { data, error: fetchError } = await useFetch('/api/gemini/chat', {
@@ -41,6 +41,8 @@ export const useSmartGoal = () => {
             ex_userGoal.value = userGoal.value
             gemini_response.value = JSON.parse(data.value) as GoalEvaluation
         } catch (e) {
+            gemini_response.value!.has_error = true
+            gemini_response.value!.error_msg = e instanceof Error ? e.message : 'An unexpected error occurred, please try again'
             useAlert().openAlert({ type: 'ERROR', msg: e instanceof Error ? e.message : 'An unexpected error occurred, please try again' })
         } finally {
             loading.value = false
