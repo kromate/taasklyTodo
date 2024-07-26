@@ -62,7 +62,7 @@
 				<Skeleton radius="12px" height="280px" width="700px" class=" mx-auto px-4 max-w-[90%]" />
 			</div>
 			<div class="fixed bottom-2.5 inset-x-0 bg-white pt-2.5 px-3 center">
-				<form class=" relative  w-full md:max-w-[560px] flex flex-wrap mt-auto" @submit.prevent="checkIfGoalIsSmart">
+				<form v-if="gemini_response && gemini_response!.percentage < 85" class=" relative  w-full md:max-w-[560px] flex flex-wrap mt-auto" @submit.prevent="checkIfGoalIsSmart">
 					<input v-model="userGoal" type="text" class="input-field rounded-full !py-7 pr-36 " placeholder="Enter your goal (e.g., Learn a new language)">
 
 					<button class="btn-sm bg-dark text-light rounded-full absolute top-2.5 right-4" type="submit" :disabled="!userGoal || loading">

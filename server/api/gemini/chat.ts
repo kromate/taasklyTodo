@@ -1,8 +1,52 @@
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import { systemPrompts } from './system_prompt'
 
+
+const rateLimitStore = new Map()
+
+// Rate limit configuration
+const RATE_LIMIT = 1 // requests
+const RATE_LIMIT_WINDOW = 60 * 1000 // 1 minute in milliseconds
+
+function getRateLimitKey(ip:string) {
+  return `rate_limit:${ip}`
+}
+
+function isRateLimited(ip:string) {
+  const key = getRateLimitKey(ip)
+  const now = Date.now()
+  const userRequests = rateLimitStore.get(key) || []
+
+  // Remove old requests
+  const recentRequests = userRequests.filter((timestamp:number) => now - timestamp < RATE_LIMIT_WINDOW)
+
+  if (recentRequests.length >= RATE_LIMIT) {
+    return true
+  }
+
+  // Add current request
+  recentRequests.push(now)
+  rateLimitStore.set(key, recentRequests)
+
+  return false
+}
+
+
+
 export default defineEventHandler(async (event) => {
   try {
+      // Get user's IP address
+    const ip = event.node.req.headers['x-forwarded-for'] as string || event.node.req.socket.remoteAddress as string
+
+    // Check rate limit
+    if (isRateLimited(ip)) {
+      throw createError({
+        statusCode: 429,
+        statusMessage: 'Too Many Requests',
+        message: 'Rate limit exceeded. Please try again later.'
+      })
+    }
+
     const GEMINI_API_KEY = import.meta.env.GEMINI_API_KEY
     if (!GEMINI_API_KEY) {
       throw new Error('Missing GEMINI API key')

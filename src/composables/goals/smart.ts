@@ -15,7 +15,7 @@ export const useSmartGoal = () => {
 
     const smartPercentage = computed(() => {
         if (!gemini_response.value) return 0
-        return gemini_response.value.is_achievable + gemini_response.value.is_relevant + gemini_response.value.is_time_bound + gemini_response.value.is_specific
+        return gemini_response.value.is_specific + gemini_response.value.is_measurable + gemini_response.value.is_achievable + gemini_response.value.is_relevant + gemini_response.value.is_time_bound
     })
 
     const checkIfGoalIsSmart = async () => {
@@ -31,12 +31,10 @@ export const useSmartGoal = () => {
 
 
             if (fetchError.value) {
-                useAlert().openAlert({ type: 'ERROR', msg: fetchError.value.message || 'An error occurred while fetching data' })
                 throw new Error(fetchError.value.message || 'An error occurred while fetching data')
             }
 
             if (data.value === undefined) {
-                useAlert().openAlert({ type: 'ERROR', msg: 'No response received from the server' })
                 throw new Error('No response received from the server')
             }
 
@@ -48,6 +46,7 @@ export const useSmartGoal = () => {
             loading.value = false
         }
     }
+
 
     return {
         isComponentOpen,
