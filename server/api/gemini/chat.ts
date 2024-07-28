@@ -1,35 +1,9 @@
 import { GoogleGenerativeAI } from '@google/generative-ai'
-import { systemPrompts } from './system_prompt'
+import { systemPrompts } from './utils/system_prompt'
+import { isRateLimited } from './utils/rateLimit'
+import { safetySetting } from './utils/safety'
 
 
-const rateLimitStore = new Map()
-
-// Rate limit configuration
-const RATE_LIMIT = 15 // requests
-const RATE_LIMIT_WINDOW = 60 * 1000 // 1 minute in milliseconds
-
-function getRateLimitKey(ip:string) {
-  return `rate_limit:${ip}`
-}
-
-function isRateLimited(ip:string) {
-  const key = getRateLimitKey(ip)
-  const now = Date.now()
-  const userRequests = rateLimitStore.get(key) || []
-
-  // Remove old requests
-  const recentRequests = userRequests.filter((timestamp:number) => now - timestamp < RATE_LIMIT_WINDOW)
-
-  if (recentRequests.length >= RATE_LIMIT) {
-    return true
-  }
-
-  // Add current request
-  recentRequests.push(now)
-  rateLimitStore.set(key, recentRequests)
-
-  return false
-}
 
 
 
@@ -66,7 +40,8 @@ export default defineEventHandler(async (event) => {
     const model = genAI.getGenerativeModel({
       model: 'gemini-1.5-flash',
       generationConfig: { responseMimeType: 'application/json' },
-      systemInstruction: systemInst
+      systemInstruction: systemInst,
+      safetySettings: safetySetting
     })
 
     const result = await model.generateContent(prompt)
