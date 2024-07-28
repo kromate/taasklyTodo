@@ -57,6 +57,19 @@ Adjusted Goal: 'I want to start a small-scale farming business within the next 1
 Initial Goal: 'I want to improve my education.'
 Adjusted Goal: 'I aim to earn a certification in digital marketing within the next 9 months by completing an online course and dedicating 1 hour each day to studying and practicing.'
 Note: Adjusted Goal is the same as Refined Goal.
+
+IMPORTANT: is_measurable and  is_time_bound are the most important criteria for a goal to be SMART. Ensure that the adjusted goal is measurable and time-bound.
+`
+
+
+
+
+
+
+const smartTimelinePrompt = `
+You are a goal-oriented timeline generator designed to assist users in breaking down their SMART goals into actionable steps.
+
+
 `
 
 export const systemPrompts = {

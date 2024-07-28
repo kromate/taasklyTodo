@@ -47,9 +47,13 @@
 								<label for="email">How SMART is your Goal:</label>
 								<span class="card_ans">{{ smartPercentage }}%</span>
 							</div>
-							<div class="field">
-								<label for="email">Refined Goal:</label>
+							<div v-if="gemini_response && gemini_response!.percentage < 85" class="field">
+								<label for="email" class="flex justify-between w-full ">Refined Goal: <button class="btn-primary border border-dark rounded-full px-3.5 py-0.5" @click="userGoal = gemini_response?.adjusted_goal">Copy</button></label>
 								<span class="card_ans">{{ gemini_response?.adjusted_goal }}</span>
+							</div>
+
+							<div class="card_ans !border-greenx bg-[#b8e3b8]">
+								You need at least 85% smart gaol in order to generate a timeline
 							</div>
 						</section>
 					</transition>
@@ -69,6 +73,7 @@
 						Generate
 					</button>
 				</form>
+				<form v-else class=" relative  w-full md:max-w-[560px] flex flex-wrap mt-auto" @submit.prevent="checkIfGoalIsSmart" />
 			</div>
 		</section>
 	</transition>

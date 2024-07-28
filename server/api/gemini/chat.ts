@@ -5,7 +5,7 @@ import { systemPrompts } from './system_prompt'
 const rateLimitStore = new Map()
 
 // Rate limit configuration
-const RATE_LIMIT = 1 // requests
+const RATE_LIMIT = 15 // requests
 const RATE_LIMIT_WINDOW = 60 * 1000 // 1 minute in milliseconds
 
 function getRateLimitKey(ip:string) {

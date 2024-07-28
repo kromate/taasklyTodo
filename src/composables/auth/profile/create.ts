@@ -69,7 +69,7 @@ const createUserProfile = async (sent_data: any) => {
 			const { data, error } = await useFetch('/api/createUserProfile', {
     method: 'POST',
     body: sent_data
-			})
+			}) as any
 
 
 	return { success: data.value?.success, msg: data.value!.msg }
