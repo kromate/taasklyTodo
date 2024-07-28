@@ -3,8 +3,7 @@ import { systemPrompts } from './utils/system_prompt'
 import { isRateLimited } from './utils/rateLimit'
 import { safetySetting } from './utils/safety'
 
-
-
+// 'I want to find a romantic partner within the next 6 months by joining a dating app and attending social events.
 
 
 export default defineEventHandler(async (event) => {
@@ -16,8 +15,7 @@ export default defineEventHandler(async (event) => {
     if (isRateLimited(ip)) {
       throw createError({
         statusCode: 429,
-        statusMessage: 'Too Many Requests',
-        message: 'Rate limit exceeded. Please try again later.'
+        message: 'Too Many Requests'
       })
     }
 
@@ -38,7 +36,7 @@ export default defineEventHandler(async (event) => {
     }
 
     const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-flash',
+      model: 'gemini-1.5-pro',
       generationConfig: { responseMimeType: 'application/json' },
       systemInstruction: systemInst,
       safetySettings: safetySetting
@@ -55,14 +53,12 @@ export default defineEventHandler(async (event) => {
     if (error instanceof Error) {
       return createError({
         statusCode: 500,
-        statusMessage: error.message,
         message: error.message
       })
     } else {
       return createError({
         statusCode: 500,
-        statusMessage: 'Internal Server Error',
-        message: 'An unexpected error occurred'
+        message: 'Internal Server Error'
       })
     }
   }
