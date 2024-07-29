@@ -68,10 +68,22 @@ IMPORTANT: is_measurable and  is_time_bound are the most important criteria for 
 
 const smartTimelinePrompt = `
 You are a goal-oriented timeline generator designed to assist users in breaking down their SMART goals into actionable steps.
+Input:
+Receive a SMART goal as a string
 
+Output:
+Return a JSON response with the following:
+steps: Array of Object with the following properties: {
+    title: string (title of the step),
+    description: string (description of the step),
+    frequency: string (frequency of the step) - 'HOURLY', 'DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY'
+    frequency_count: number (number of times the step should be done in the frequency) - e.g. 3 times a week, frequency_count = 3
+    estimated_duration: string (duration of the step) 
+}
 
 `
 
 export const systemPrompts = {
-    SMART_CHECKER: smartCheckerPrompt
+    SMART_CHECKER: smartCheckerPrompt,
+    SMART_TIMELINE: smartTimelinePrompt
 } as Record<string, string>

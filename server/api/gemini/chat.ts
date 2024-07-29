@@ -3,15 +3,14 @@ import { systemPrompts } from './utils/system_prompt'
 import { isRateLimited } from './utils/rateLimit'
 import { safetySetting } from './utils/safety'
 
-// 'I want to find a romantic partner within the next 6 months by joining a dating app and attending social events.
+
 
 
 export default defineEventHandler(async (event) => {
   try {
-      // Get user's IP address
     const ip = event.node.req.headers['x-forwarded-for'] as string || event.node.req.socket.remoteAddress as string
 
-    // Check rate limit
+
     if (isRateLimited(ip)) {
       throw createError({
         statusCode: 429,
@@ -36,7 +35,7 @@ export default defineEventHandler(async (event) => {
     }
 
     const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-pro',
+      model: 'gemini-1.5-flash',
       generationConfig: { responseMimeType: 'application/json' },
       systemInstruction: systemInst,
       safetySettings: safetySetting
@@ -63,3 +62,6 @@ export default defineEventHandler(async (event) => {
     }
   }
 })
+
+
+// I aim to increase my confidence by improving my fitness level through exercising for 30 minutes, 3 times a week, and adopting a balanced diet for the next 6 months. I will track my progress by taking weekly measurements and noting any positive changes in my physical and mental well-being.

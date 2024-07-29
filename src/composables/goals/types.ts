@@ -10,3 +10,12 @@ export interface GoalEvaluation {
   is_relevant: number;
   is_time_bound: number;
 }
+
+
+export interface TimeLineObject {
+  title: string;
+  description: string;
+  frequency: string;
+  frequency_count: number;
+  estimated_duration: number;
+}

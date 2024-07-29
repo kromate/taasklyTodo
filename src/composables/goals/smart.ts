@@ -6,6 +6,7 @@ const ex_userGoal = ref('')
 const userGoal = ref('')
 const gemini_response = ref<GoalEvaluation | Record<string, any>>({})
 const loading = ref(false)
+const step = ref(1)
 
 
 export const useSmartGoal = () => {
@@ -57,7 +58,7 @@ export const useSmartGoal = () => {
         loading,
         gemini_response,
         hasUserGoalChanged,
-        smartPercentage
-
+        smartPercentage,
+        step
     }
 }
