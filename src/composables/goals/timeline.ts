@@ -13,7 +13,6 @@ export const useGenerateGoalTimeline = () => {
     const { step } = useSmartGoal()
 
     const generateGoalTimeline = async (goal) => {
-        console.log(goal)
         loading.value = true
         steps.value = []
         step.value = 2
@@ -35,8 +34,6 @@ export const useGenerateGoalTimeline = () => {
 
 
             steps.value = JSON.parse(data.value).steps as TimeLineObject[]
-
-            console.log(steps.value)
         } catch (e) {
             useAlert().openAlert({ type: 'ERROR', msg: e instanceof Error ? e.message : 'An unexpected error occurred, please try again' })
         } finally {

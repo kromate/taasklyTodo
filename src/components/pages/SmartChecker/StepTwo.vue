@@ -2,7 +2,7 @@
 	<section class=" flex flex-col items-center gap-4">
 		<div class="flex gap-4 items-center justify-center flex-wrap mt-16 mb-10">
 			<h1 class="outline text-4xl text-center font-black sm:text-5xl md:text-4xl lg:text-6xl xl:text-7xl tracking-normal text-dark poppins w-full center">
-				Generating Timeline
+				Generating Actionable Steps
 			</h1>
 		</div>
 

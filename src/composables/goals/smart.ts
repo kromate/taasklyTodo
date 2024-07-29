@@ -19,6 +19,13 @@ export const useSmartGoal = () => {
         return gemini_response.value.is_specific + gemini_response.value.is_measurable + gemini_response.value.is_achievable + gemini_response.value.is_relevant + gemini_response.value.is_time_bound
     })
 
+    const closeModal = () => {
+        isComponentOpen.value = false
+        userGoal.value = ''
+        ex_userGoal.value = ''
+        gemini_response.value = {}
+        step.value = 1
+    }
     const checkIfGoalIsSmart = async () => {
         loading.value = true
         isComponentOpen.value = true
@@ -51,14 +58,5 @@ export const useSmartGoal = () => {
     }
 
 
-    return {
-        isComponentOpen,
-        userGoal,
-        checkIfGoalIsSmart,
-        loading,
-        gemini_response,
-        hasUserGoalChanged,
-        smartPercentage,
-        step
-    }
+    return { closeModal, isComponentOpen, userGoal, checkIfGoalIsSmart, loading, gemini_response, hasUserGoalChanged, smartPercentage, step }
 }
