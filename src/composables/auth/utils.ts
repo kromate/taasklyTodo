@@ -11,7 +11,7 @@ export const afterAuthCheck = async (user: User | null) => {
         }
         const redirectUrl = useUser().redirectUrl.value
         useUser().redirectUrl.value = null
-         useRouter().push(redirectUrl ?? '/booking-types')
+         useRouter().push(redirectUrl ?? '/goals')
     }
 }
 

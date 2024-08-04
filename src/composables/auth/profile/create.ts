@@ -39,7 +39,7 @@ export const useCreateProfile = () => {
 			const res = await callFirebaseFunction('createUserProfileForBooking', sent_date) as any
 			if (res.success) {
 				setUserProfile(sent_date)
-				useRouter().push('/booking-types')
+				useRouter().push('/goals')
 			} else {
 				useAlert().openAlert({ type: 'ERROR', msg: res.msg })
 				loading.value = false

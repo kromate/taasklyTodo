@@ -1,8 +1,6 @@
 // import { is_dev } from './src/composables/utils/system'
 
 
-
-
 export default {
     keepalive: true,
     head: {

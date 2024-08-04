@@ -5,7 +5,7 @@ export const dashboardRoutes = () => [
 	{
 		icon: Link,
 		name: 'Booking Types',
-		route: '/booking-types',
+		route: '/goals',
 		main: true,
 		bg: '#e5e7eb',
 		color: '#18181B'
