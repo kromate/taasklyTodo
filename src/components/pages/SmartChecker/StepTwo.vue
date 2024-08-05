@@ -2,7 +2,7 @@
 	<section class=" flex flex-col items-center gap-4">
 		<div class="flex gap-4 items-center justify-center flex-wrap mt-16 mb-10">
 			<h1 class="outline text-4xl text-center font-black sm:text-5xl md:text-4xl lg:text-6xl xl:text-7xl tracking-normal text-dark poppins w-full center">
-				Generating Actionable Steps
+				{{ loading ? 'Generating' : 'Generated' }} Actionable Steps
 			</h1>
 		</div>
 
@@ -46,8 +46,9 @@ const { generateGoalTimeline, steps, loading } = useGenerateGoalTimeline()
 
 <style scoped>
 textarea::placeholder {
-  @apply text-[#252525ea] font-semibold text-lg text-nowrap truncate
+	@apply text-[#252525ea] font-semibold text-lg text-nowrap truncate
 }
+
 .outline {
 	line-height: 1.2;
 	text-decoration: none;
@@ -56,34 +57,35 @@ textarea::placeholder {
 }
 
 li::first-letter {
-  font-size: 1.25em;  /* Adjust font size as desired */
-  font-weight: bold;
-  color: #845bd8
-
+	font-size: 1.25em;
+	/* Adjust font size as desired */
+	font-weight: bold;
+	color: #845bd8
 }
 
-.card_ans{
-@apply p-4 border border-line w-full rounded-md
+.card_ans {
+	@apply p-4 border border-line w-full rounded-md
 }
-.card_ans_sm{
-@apply px-2 py-1.5 border border-line w-auto rounded-md
+
+.card_ans_sm {
+	@apply px-2 py-1.5 border border-line w-auto rounded-md
 }
 
 .show-enter-active {
-  transition: all 0.3s ease-out;
+	transition: all 0.3s ease-out;
 }
 
 .show-enter-from {
-  opacity: 0;
-  transform: scale(0.5);
+	opacity: 0;
+	transform: scale(0.5);
 }
 
 .show-leave-active {
-  transition: all 0.3s ease-in;
+	transition: all 0.3s ease-in;
 }
 
 .show-leave-to {
-  opacity: 0;
-  transform: scale(0.5);
+	opacity: 0;
+	transform: scale(0.5);
 }
 </style>
