@@ -29,11 +29,11 @@
 					<label for="email">Your Goal:</label>
 					<span class="card_ans">{{ userGoal }}</span>
 					<div class="flex flex-wrap gap-2.5 text-xs mt-2 items-center justify-start">
-						<span class="card_ans_sm"><b>Specific:</b>  {{ gemini_response?.is_specific }} </span>
-						<span class="card_ans_sm"><b>Measurable:</b>  {{ gemini_response?.is_measurable }} </span>
-						<span class="card_ans_sm"><b>Achievable:</b>  {{ gemini_response?.is_achievable }} </span>
-						<span class="card_ans_sm"><b>Relevant:</b>  {{ gemini_response?.is_relevant }} </span>
-						<span class="card_ans_sm"><b>Time-bound:</b>  {{ gemini_response?.is_time_bound }} </span>
+						<span class="card_ans_sm"><b>Specific:</b> {{ gemini_response?.is_specific }} </span>
+						<span class="card_ans_sm"><b>Measurable:</b> {{ gemini_response?.is_measurable }} </span>
+						<span class="card_ans_sm"><b>Achievable:</b> {{ gemini_response?.is_achievable }} </span>
+						<span class="card_ans_sm"><b>Relevant:</b> {{ gemini_response?.is_relevant }} </span>
+						<span class="card_ans_sm"><b>Time-bound:</b> {{ gemini_response?.is_time_bound }} </span>
 					</div>
 				</div>
 				<transition name="glide_up" appear>
@@ -65,15 +65,8 @@
 		</div>
 		<div class="fixed bottom-2.5 inset-x-0 bg-white pt-2.5 px-3 center">
 			<form v-if="gemini_response && gemini_response!.percentage < 85" class="relative w-full md:max-w-[560px] flex flex-wrap mt-auto" @submit.prevent="checkIfGoalIsSmart">
-				<textarea
-					ref="textarea"
-					v-model="userGoal"
-					class="input-field  !pb-4 !pt-4 pr-36 w-full resize-none overflow-hidden h-auto  transition-all duration-300 ease-in-out"
-					placeholder="Enter your goal (e.g., Learn a new language)"
-					rows="1"
-					@input="adjustTextareaHeight"
-					@keydown="handleKeyDown"
-				/>
+				<textarea ref="textarea" v-model="userGoal" class="input-field  !pb-4 !pt-4 pr-36 w-full resize-none overflow-hidden h-auto  transition-all duration-300 ease-in-out" placeholder="Enter your goal (e.g., Learn a new language)" rows="1" @input="adjustTextareaHeight"
+					@keydown="handleKeyDown" />
 
 				<button class="btn-sm bg-dark text-light rounded-full absolute bottom-2.5 right-4" type="submit" :disabled="!userGoal">
 					Generate
@@ -102,21 +95,22 @@ const adjustTextareaHeight = () => {
 }
 
 const handleKeyDown = (event: KeyboardEvent) => {
-  if (event.key === 'Enter' && !event.shiftKey) {
-    event.preventDefault()
-    checkIfGoalIsSmart()
-  }
+	if (event.key === 'Enter' && !event.shiftKey) {
+		event.preventDefault()
+		checkIfGoalIsSmart()
+	}
 }
 
 watch([userGoal, gemini_response], () => {
-  adjustTextareaHeight()
+	adjustTextareaHeight()
 }, { deep: true })
 </script>
 
 <style scoped>
 textarea::placeholder {
-  @apply text-[#252525ea] font-semibold text-lg text-nowrap truncate
+	@apply text-[#252525ea] font-semibold text-lg text-nowrap truncate
 }
+
 .outline {
 	line-height: 1.2;
 	text-decoration: none;
@@ -125,34 +119,29 @@ textarea::placeholder {
 }
 
 li::first-letter {
-  font-size: 1.25em;  /* Adjust font size as desired */
-  font-weight: bold;
-  color: #845bd8
-
+	font-size: 1.25em;
+	/* Adjust font size as desired */
+	font-weight: bold;
+	color: #845bd8
 }
 
-.card_ans{
-@apply p-2 border border-line w-full rounded-md
-}
-.card_ans_sm{
-@apply px-2 py-1.5 border border-line w-auto rounded-md
-}
+
 
 .show-enter-active {
-  transition: all 0.3s ease-out;
+	transition: all 0.3s ease-out;
 }
 
 .show-enter-from {
-  opacity: 0;
-  transform: scale(0.5);
+	opacity: 0;
+	transform: scale(0.5);
 }
 
 .show-leave-active {
-  transition: all 0.3s ease-in;
+	transition: all 0.3s ease-in;
 }
 
 .show-leave-to {
-  opacity: 0;
-  transform: scale(0.5);
+	opacity: 0;
+	transform: scale(0.5);
 }
 </style>
