@@ -10,22 +10,46 @@
 
 
 		<transition name="show" appear>
-			<div v-if="steps.length && !loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-x-4 gap-y-6 mw-full border border-line mx-auto p-4 px-4 shadow-md rounded-lg">
-				<div v-for="(step, idx) in steps" :key="step.title" class="field h-full">
-					<label class="btn px-3 py-0.5 bg-dark text-light mb-2.5">Steps {{ idx + 1 }}:</label>
-					<div class="card_ans h-full justify-between flex flex-col gap-2">
-						<h1 class="font-semibold  underline">
-							{{ step.title }}
-						</h1>
-						<p class="mb-5">
-							{{ step.description }}
-						</p>
-						<footer class=" italic mt-auto">
-							<b>Frequency:</b> {{ transformString(step.frequency) }}
-						</footer>
+			<section class="flex flex-col gap-8 max-w-[1500px]">
+
+				<div class="flex flex-col gap-8 w-full border border-line mx-auto p-4 px-4 shadow-md rounded-lg ">
+					<div class="field">
+						<h4 class='heading'> Your Goal:</h4>
+						<span class="card_ans bg-hover">{{ userGoal }}</span>
+					</div>
+					<div class="flex flex-col ">
+						<h4 class='heading'> Actionable Step:</h4>
+						<div v-if="steps.length && !loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-x-4 gap-y-6 ">
+							<div v-for="(step, idx) in steps" :key="step.title" class="field h-full">
+								<h4 class="pill text-base border-line bg-[#b8e3b8] mb-2.5">Steps {{ idx + 1 }}:</h4>
+								<div class="card_ans h-full justify-between flex flex-col gap-2">
+									<h1 class="font-semibold  underline">
+										{{ step.title }}
+									</h1>
+									<p class="mb-5">
+										{{ step.description }}
+									</p>
+									<footer class=" italic mt-auto">
+										<b>Frequency:</b> {{ transformString(step.frequency) }}
+									</footer>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
+				<div class="card_ans !border-greenx bg-[#000000] text-white flex flex-wrap gap-1 items-center !text-lg">
+					<button class="inline underline font-bold">Sign in</button> or <button class="inline underline font-bold">create an account</button> to
+					<span class="font-semibold text-[#cadef4]">save your actionable steps</span>,
+					<span class="font-semibold text-[#f9d7cf]">track your progress</span>,
+					<span class="font-semibold text-[#dcffd7]">get reminders</span>,
+					<span class="font-semibold text-[#f0fec8]">share with friends or partners</span>, and
+					<span class="font-semibold text-[#ccf8cd]">more!</span>
+
+					<button class="btn bg-white text-dark ml-auto block w-full mt-2 md:w-auto md:mt-0">Get Started</button>
+				</div>
+
+			</section>
+
 		</transition>
 		<div v-if="loading" class="flex px-4 w-full">
 			<Skeleton radius="12px" height="280px" width="700px" class=" mx-auto px-4 max-w-[90%]" />
@@ -34,10 +58,11 @@
 </template>
 
 <script setup lang="ts">
-
+import { useSmartGoal } from '@/composables/goals/smart'
 import { useGenerateGoalTimeline } from '@/composables/goals/timeline'
 import { transformString } from '@/composables/utils/formatter'
 
+const { userGoal } = useSmartGoal()
 const { generateGoalTimeline, steps, loading } = useGenerateGoalTimeline()
 
 
@@ -45,6 +70,10 @@ const { generateGoalTimeline, steps, loading } = useGenerateGoalTimeline()
 </script>
 
 <style scoped>
+.heading {
+	@apply text-xl font-medium underline mb-4
+}
+
 textarea::placeholder {
 	@apply text-[#252525ea] font-semibold text-lg text-nowrap truncate
 }
@@ -54,6 +83,12 @@ textarea::placeholder {
 	text-decoration: none;
 	color: transparent;
 	-webkit-text-stroke: 1.5px #000;
+
+	@media screen and (max-width: 768px) {
+		color: black;
+		outline: none;
+		border: none;
+	}
 }
 
 li::first-letter {

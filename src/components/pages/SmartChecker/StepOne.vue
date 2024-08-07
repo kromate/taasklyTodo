@@ -24,9 +24,9 @@
 			</div>
 		</transition>
 		<transition name="show" appear>
-			<div v-if="userGoal && !loading && !hasUserGoalChanged" class="flex flex-col gap-4 max-w-[560px] w-full border border-line mx-auto p-4 px-4 shadow-md rounded-lg">
+			<div v-if="userGoal && !loading && !hasUserGoalChanged" class="flex flex-col gap-4 max-w-[560px] w-full border border-line mx-auto p-4 px-4 shadow-md rounded-lg mb-12">
 				<div class="field">
-					<label for="email">Your Goal:</label>
+					<h4>Your Goal:</h4>
 					<span class="card_ans">{{ userGoal }}</span>
 					<div class="flex flex-wrap gap-2.5 text-xs mt-2 items-center justify-start">
 						<span class="card_ans_sm"><b>Specific:</b> {{ gemini_response?.is_specific }} </span>
@@ -39,17 +39,19 @@
 				<transition name="glide_up" appear>
 					<section v-if="gemini_response?.percentage" class="flex flex-col gap-4">
 						<div class="field">
-							<label for="email">How SMART is your Goal:</label>
+							<h4>How SMART is your Goal:</h4>
 							<span class="card_ans">{{ smartPercentage }}%</span>
 						</div>
-						<div v-if="gemini_response && gemini_response!.percentage < 85" class="field">
-							<label for="email" class="flex justify-between w-full ">Refined Goal: <button class="btn-primary border border-dark rounded-full px-3.5 py-0.5" @click="userGoal = gemini_response?.adjusted_goal">Copy</button></label>
-							<span class="card_ans">{{ gemini_response?.adjusted_goal }}</span>
-						</div>
-
 						<div class="card_ans !border-greenx bg-[#b8e3b8]">
 							You need at least 85% smart gaol in order to generate a timeline
 						</div>
+						<div v-if="gemini_response && gemini_response!.percentage < 85" class="field">
+							<h4 class="flex justify-between w-full ">Refined Goal: </h4>
+							<span class="card_ans">{{ gemini_response?.adjusted_goal }}</span>
+							<button class="btn bg-dark text-light w-full mt-4" @click="userGoal = gemini_response?.adjusted_goal">Use this goal instead</button>
+						</div>
+
+
 						<button v-if="gemini_response && gemini_response!.percentage >= 85" class="btn bg-dark text-light w-full" type="submit" :disabled="!userGoal" @click="generateGoalTimeline(userGoal)">
 							Create actionable steps
 						</button>
@@ -116,6 +118,12 @@ textarea::placeholder {
 	text-decoration: none;
 	color: transparent;
 	-webkit-text-stroke: 1.5px #000;
+
+	@media screen and (max-width: 768px) {
+		color: black;
+		outline: none;
+		border: none;
+	}
 }
 
 li::first-letter {

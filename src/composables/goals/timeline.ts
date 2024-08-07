@@ -1,12 +1,13 @@
 import { useSmartGoal } from './smart'
 import { TimeLineObject } from './types'
 import { useAlert } from '@/composables/core/notification'
+import { useStorage } from '@vueuse/core';
 
 
 
 const loading = ref(false)
 const steps = ref<TimeLineObject[]>([])
-
+const unauthorisedGoalSync = useStorage('unauthorisedGoalSync', {})
 
 
 export const useGenerateGoalTimeline = () => {
@@ -47,8 +48,5 @@ export const useGenerateGoalTimeline = () => {
         generateGoalTimeline,
         loading,
         steps
-
-
-
     }
 }
