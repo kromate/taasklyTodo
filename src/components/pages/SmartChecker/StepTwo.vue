@@ -34,8 +34,11 @@
 									<p class="mb-5">
 										{{ step.description }}
 									</p>
-									<footer class=" italic mt-auto">
-										<b>Frequency:</b> {{ transformString(step.frequency) }}
+									<footer class=" italic mt-auto flex flex-col ">
+										<span><b>Frequency:</b> {{ transformString(step.frequency) }}</span>
+										<span><b>Frequency Count:</b> {{ step.frequency_count }}</span>
+										<span><b>Estimated Duration:</b> {{ step.estimated_duration }}</span>
+
 									</footer>
 								</div>
 							</div>
