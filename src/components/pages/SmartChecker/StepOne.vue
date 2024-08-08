@@ -46,9 +46,13 @@
 							You need at least 85% smart gaol in order to generate a timeline
 						</div>
 						<div v-if="gemini_response && gemini_response!.percentage < 85" class="field">
-							<h4 class="flex justify-between w-full ">Refined Goal: </h4>
+							<h4 class="flex justify-between w-full ">
+								Refined Goal:
+							</h4>
 							<span class="card_ans">{{ gemini_response?.adjusted_goal }}</span>
-							<button class="btn bg-dark text-light w-full mt-4" @click="userGoal = gemini_response?.adjusted_goal">Use this goal instead</button>
+							<button class="btn bg-dark text-light w-full mt-4" @click="userGoal = gemini_response?.adjusted_goal">
+								Use this goal instead
+							</button>
 						</div>
 
 

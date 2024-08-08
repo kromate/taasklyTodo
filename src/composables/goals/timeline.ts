@@ -1,7 +1,7 @@
+import { useStorage } from '@vueuse/core'
 import { useSmartGoal } from './smart'
 import { TimeLineObject } from './types'
 import { useAlert } from '@/composables/core/notification'
-import { useStorage } from '@vueuse/core';
 
 
 
@@ -11,7 +11,7 @@ const unauthorisedGoalSync = useStorage('unauthorisedGoalSync', {})
 
 
 export const useGenerateGoalTimeline = () => {
-    const { step } = useSmartGoal()
+    const { step, userGoal } = useSmartGoal()
 
     const generateGoalTimeline = async (goal) => {
         loading.value = true
@@ -42,9 +42,18 @@ export const useGenerateGoalTimeline = () => {
         }
     }
 
+    const saveUnauthorisedGoal = (url:string) => {
+        unauthorisedGoalSync.value = {
+            goal: userGoal.value,
+            steps: steps.value
+        }
+
+        useRouter().push(url)
+    }
+
 
     return {
-
+        saveUnauthorisedGoal,
         generateGoalTimeline,
         loading,
         steps
