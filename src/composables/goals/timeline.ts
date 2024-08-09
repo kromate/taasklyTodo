@@ -10,7 +10,7 @@ const steps = ref<TimeLineObject[]>([])
 const unauthorisedGoalSync = useStorage('unauthorisedGoalSync', {})
 
 
-export const useGenerateGoalTimeline = () => {
+export const useGenerateGoalActionableStep = () => {
     const { step, userGoal } = useSmartGoal()
 
     const generateGoalTimeline = async (goal) => {
@@ -53,6 +53,7 @@ export const useGenerateGoalTimeline = () => {
 
 
     return {
+        unauthorisedGoalSync,
         saveUnauthorisedGoal,
         generateGoalTimeline,
         loading,

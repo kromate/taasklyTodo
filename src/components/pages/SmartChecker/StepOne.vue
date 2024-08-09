@@ -84,9 +84,9 @@
 
 <script setup lang="ts">
 import { useSmartGoal } from '@/composables/goals/smart'
-import { useGenerateGoalTimeline } from '@/composables/goals/timeline'
+import { useGenerateGoalActionableStep } from '@/composables/goals/timeline'
 
-const { generateGoalTimeline } = useGenerateGoalTimeline()
+const { generateGoalTimeline } = useGenerateGoalActionableStep()
 const { loading, userGoal, gemini_response, checkIfGoalIsSmart, hasUserGoalChanged, smartPercentage } = useSmartGoal()
 
 const textarea = ref()

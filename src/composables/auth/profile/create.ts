@@ -4,6 +4,7 @@ import { convertObjWithRefToObj } from '@/composables/utils/formatter'
 import { useAlert } from '@/composables/core/notification'
 import { useUser } from '@/composables/auth/user'
 import { callFirebaseFunction } from '@/firebase/functions'
+import { useGenerateGoalActionableStep } from '@/composables/goals/timeline'
 
 
 
@@ -18,6 +19,8 @@ const profileFormState = {
 
 
 export const useCreateProfile = () => {
+	const { unauthorisedGoalSync } = useGenerateGoalActionableStep()
+	console.log(unauthorisedGoalSync.value)
 	const { id, setUserProfile } = useUser()
 	const loading = ref(false)
 	const phoneNumError = ref()
@@ -36,7 +39,7 @@ export const useCreateProfile = () => {
 		try {
 			const sent_date = { id: id.value, ...convertObjWithRefToObj(profileFormState), created_at: new Date().toISOString(), updated_at: new Date().toISOString() } as ProfileType
 
-			const res = await callFirebaseFunction('createUserProfileForBooking', sent_date) as any
+			const res = await callFirebaseFunction('createUserProfileForGoals', sent_date) as any
 			if (res.success) {
 				setUserProfile(sent_date)
 				useRouter().push('/goals')
@@ -65,15 +68,7 @@ export const useCreateProfile = () => {
 }
 
 
-const createUserProfile = async (sent_data: any) => {
-			const { data, error } = await useFetch('/api/createUserProfile', {
-    method: 'POST',
-    body: sent_data
-			}) as any
 
-
-	return { success: data.value?.success, msg: data.value!.msg }
-}
 
 
 export const useUsername = () => {
@@ -85,7 +80,7 @@ export const useUsername = () => {
 		profileFormState.username.value = profileFormState.username.value.replace(/ /g, '').toLowerCase()
 
 
-			const { exists } = await callFirebaseFunction('checkUsernameForBooking', { username: profileFormState.username.value }) as any
+			const { exists } = await callFirebaseFunction('checkUsernameForGoals', { username: profileFormState.username.value }) as any
 
 
 

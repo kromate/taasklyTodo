@@ -71,11 +71,11 @@
 
 <script setup lang="ts">
 import { useSmartGoal } from '@/composables/goals/smart'
-import { useGenerateGoalTimeline } from '@/composables/goals/timeline'
+import { useGenerateGoalActionableStep } from '@/composables/goals/timeline'
 import { transformString } from '@/composables/utils/formatter'
 
 const { userGoal } = useSmartGoal()
-const { saveUnauthorisedGoal, steps, loading } = useGenerateGoalTimeline()
+const { saveUnauthorisedGoal, steps, loading } = useGenerateGoalActionableStep()
 
 
 
