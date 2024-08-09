@@ -70,8 +70,8 @@
 </template>
 
 <script setup lang="ts">
-import { useSmartGoal } from '@/composables/goals/smart'
-import { useGenerateGoalActionableStep } from '@/composables/goals/timeline'
+import { useSmartGoal } from '@/composables/genericGoals/smart'
+import { useGenerateGoalActionableStep } from '@/composables/genericGoals/timeline'
 import { transformString } from '@/composables/utils/formatter'
 
 const { userGoal } = useSmartGoal()

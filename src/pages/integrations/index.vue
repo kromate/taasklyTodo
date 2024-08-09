@@ -31,9 +31,9 @@
 
 import GoogleIcon from '@/assets/icons/Google.vue'
 
-import { useFetchIntegrations } from '@/composables/integrations/fetch'
+import { useFetchIntegrations } from '@/composables/dashboard/integrations/fetch'
 import { usePageHeader } from '@/composables/utils/header'
-import { useLinkGoogleCalendar } from '@/composables/integrations/link'
+import { useLinkGoogleCalendar } from '@/composables/dashboard/integrations/link'
 
 
 const { fetchUserIntegrations, loading: IntegrationListLoading, fetchedIntegrations, hasIntegration } = useFetchIntegrations()

@@ -1,8 +1,11 @@
 <template>
-	<section class=" flex flex-col items-center gap-4">
+	<section class=" flex flex-col items-center gap-4 relative h-[calc(100vh-140px)] w-full ">
 		<div class="flex gap-4 items-center justify-center flex-wrap mt-16">
 			<h1 class="outline text-4xl text-center font-black sm:text-5xl md:text-4xl lg:text-6xl xl:text-7xl tracking-normal text-dark poppins w-full center">
-				Checking if your goal is S.M.A.R.T?
+
+
+				{{ loading ? 'Checking if your goal is S.M.A.R.T?' : 'S.M.A.R.T-ify Goal' }}
+
 			</h1>
 		</div>
 
@@ -24,44 +27,47 @@
 			</div>
 		</transition>
 		<transition name="show" appear>
-			<div v-if="userGoal && !loading && !hasUserGoalChanged" class="flex flex-col gap-4 max-w-[560px] w-full border border-line mx-auto p-4 px-4 shadow-md rounded-lg mb-12">
-				<div class="field">
-					<h4>Your Goal:</h4>
-					<span class="card_ans">{{ userGoal }}</span>
-					<div class="flex flex-wrap gap-2.5 text-xs mt-2 items-center justify-start">
-						<span class="card_ans_sm"><b>Specific:</b> {{ gemini_response?.is_specific }} </span>
-						<span class="card_ans_sm"><b>Measurable:</b> {{ gemini_response?.is_measurable }} </span>
-						<span class="card_ans_sm"><b>Achievable:</b> {{ gemini_response?.is_achievable }} </span>
-						<span class="card_ans_sm"><b>Relevant:</b> {{ gemini_response?.is_relevant }} </span>
-						<span class="card_ans_sm"><b>Time-bound:</b> {{ gemini_response?.is_time_bound }} </span>
+			<section class="pb-96" v-if="userGoal && !loading && !hasUserGoalChanged">
+				<div class="flex flex-col gap-4 max-w-[560px] w-full border border-line mx-auto p-4 px-4 shadow-md rounded-lg mb-12 ">
+					<div class="field">
+						<h4>Your Goal:</h4>
+						<span class="card_ans">{{ userGoal }}</span>
+						<div class="flex flex-wrap gap-2.5 text-xs mt-2 items-center justify-start">
+							<span class="card_ans_sm"><b>Specific:</b> {{ gemini_response?.is_specific }} </span>
+							<span class="card_ans_sm"><b>Measurable:</b> {{ gemini_response?.is_measurable }} </span>
+							<span class="card_ans_sm"><b>Achievable:</b> {{ gemini_response?.is_achievable }} </span>
+							<span class="card_ans_sm"><b>Relevant:</b> {{ gemini_response?.is_relevant }} </span>
+							<span class="card_ans_sm"><b>Time-bound:</b> {{ gemini_response?.is_time_bound }} </span>
+						</div>
 					</div>
-				</div>
-				<transition name="glide_up" appear>
-					<section v-if="gemini_response?.percentage" class="flex flex-col gap-4">
-						<div class="field">
-							<h4>How SMART is your Goal:</h4>
-							<span class="card_ans">{{ smartPercentage }}%</span>
-						</div>
-						<div class="card_ans !border-greenx bg-[#b8e3b8]">
-							You need at least 85% smart gaol in order to generate a timeline
-						</div>
-						<div v-if="gemini_response && gemini_response!.percentage < 85" class="field">
-							<h4 class="flex justify-between w-full ">
-								Refined Goal:
-							</h4>
-							<span class="card_ans">{{ gemini_response?.adjusted_goal }}</span>
-							<button class="btn bg-dark text-light w-full mt-4" @click="userGoal = gemini_response?.adjusted_goal">
-								Use this goal instead
+					<transition name="glide_up" appear>
+						<section v-if="gemini_response?.percentage" class="flex flex-col gap-4">
+							<div class="field">
+								<h4>How SMART is your Goal:</h4>
+								<span class="card_ans">{{ smartPercentage }}%</span>
+							</div>
+							<div class="card_ans !border-greenx bg-[#b8e3b8]">
+								You need at least 85% smart gaol in order to generate a timeline
+							</div>
+							<div v-if="gemini_response && gemini_response!.percentage < 85" class="field">
+								<h4 class="flex justify-between w-full ">
+									Refined Goal:
+								</h4>
+								<span class="card_ans">{{ gemini_response?.adjusted_goal }}</span>
+								<button class="btn bg-dark text-light w-full mt-4" @click="userGoal = gemini_response?.adjusted_goal">
+									Use this goal instead
+								</button>
+							</div>
+
+
+							<button v-if="gemini_response && gemini_response!.percentage >= 85" class="btn bg-dark text-light w-full" type="submit" :disabled="!userGoal" @click="generateGoalTimeline(userGoal)">
+								Create actionable steps
 							</button>
-						</div>
+						</section>
+					</transition>
+				</div>
+			</section>
 
-
-						<button v-if="gemini_response && gemini_response!.percentage >= 85" class="btn bg-dark text-light w-full" type="submit" :disabled="!userGoal" @click="generateGoalTimeline(userGoal)">
-							Create actionable steps
-						</button>
-					</section>
-				</transition>
-			</div>
 		</transition>
 
 
@@ -69,8 +75,8 @@
 		<div v-if="loading" class="flex px-4 w-full">
 			<Skeleton radius="12px" height="280px" width="700px" class=" mx-auto px-4 max-w-[90%]" />
 		</div>
-		<div class="fixed bottom-2.5 inset-x-0 bg-white pt-2.5 px-3 center">
-			<form v-if="gemini_response && gemini_response!.percentage < 85" class="relative w-full md:max-w-[560px] flex flex-wrap mt-auto" @submit.prevent="checkIfGoalIsSmart">
+		<div class="fixed  max-w-full w-[800px] bottom-20 md:bottom-5  bg-transparent pt-2.5 center px-4">
+			<form class="relative w-full md:max-w-[840px] flex flex-wrap mt-auto bg-light" @submit.prevent="checkIfGoalIsSmart">
 				<textarea ref="textarea" v-model="userGoal" class="input-field  !pb-4 !pt-4 pr-36 w-full resize-none overflow-hidden h-auto  transition-all duration-300 ease-in-out" placeholder="Enter your goal (e.g., Learn a new language)" rows="1" @input="adjustTextareaHeight"
 					@keydown="handleKeyDown" />
 
@@ -83,8 +89,8 @@
 </template>
 
 <script setup lang="ts">
-import { useSmartGoal } from '@/composables/goals/smart'
-import { useGenerateGoalActionableStep } from '@/composables/goals/timeline'
+import { useSmartGoal } from '@/composables/genericGoals/smart'
+import { useGenerateGoalActionableStep } from '@/composables/genericGoals/timeline'
 
 const { generateGoalTimeline } = useGenerateGoalActionableStep()
 const { loading, userGoal, gemini_response, checkIfGoalIsSmart, hasUserGoalChanged, smartPercentage } = useSmartGoal()
@@ -95,7 +101,11 @@ const adjustTextareaHeight = () => {
 	setTimeout(() => {
 		if (textarea.value) {
 			textarea.value.style.height = 'auto'
-			textarea.value.style.height = textarea.value.scrollHeight + 'px'
+			if (textarea.value.scrollHeight > 200) {
+				textarea.value.style.height = '200px'
+			} else {
+				textarea.value.style.height = textarea.value.scrollHeight + 'px'
+			}
 		}
 	}, 100)
 }

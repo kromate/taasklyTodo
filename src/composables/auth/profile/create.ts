@@ -4,7 +4,7 @@ import { convertObjWithRefToObj } from '@/composables/utils/formatter'
 import { useAlert } from '@/composables/core/notification'
 import { useUser } from '@/composables/auth/user'
 import { callFirebaseFunction } from '@/firebase/functions'
-import { useGenerateGoalActionableStep } from '@/composables/goals/timeline'
+import { useGenerateGoalActionableStep } from 'src/composables/genericGoals/timeline'
 
 
 

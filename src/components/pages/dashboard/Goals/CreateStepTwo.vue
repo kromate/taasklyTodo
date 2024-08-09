@@ -38,29 +38,16 @@
 										<span><b>Frequency:</b> {{ transformString(step.frequency) }}</span>
 										<span><b>Frequency Count:</b> {{ step.frequency_count }}</span>
 										<span><b>Estimated Duration:</b> {{ step.estimated_duration }}</span>
-
 									</footer>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="card_ans !border-greenx bg-[#000000] text-white flex flex-wrap gap-1 items-center !text-lg">
-					<button class="inline underline font-bold">
-						Sign in
-					</button> or <button class="inline underline font-bold">
-						create an account
-					</button> to
-					<span class="font-semibold text-[#cadef4]">save your actionable steps</span>,
-					<span class="font-semibold text-[#f9d7cf]">track your progress</span>,
-					<span class="font-semibold text-[#dcffd7]">get reminders</span>,
-					<span class="font-semibold text-[#f0fec8]">share with friends or partners</span>, and
-					<span class="font-semibold text-[#ccf8cd]">more!</span>
 
-					<button class="btn bg-white text-dark ml-auto block w-full mt-2 md:w-auto md:mt-0" @click="saveUnauthorisedGoal('/auth/login')">
-						Get Started
-					</button>
-				</div>
+				<button class="btn bg-dark text-light" @click="createGoals">
+					Save and proceed
+				</button>
 			</section>
 		</transition>
 		<div v-if="loading" class="flex px-4 w-full">
@@ -70,14 +57,15 @@
 </template>
 
 <script setup lang="ts">
-import { useSmartGoal } from '@/composables/goals/smart'
-import { useGenerateGoalActionableStep } from '@/composables/goals/timeline'
+import { useSmartGoal } from '@/composables/genericGoals/smart'
+import { useGenerateGoalActionableStep } from '@/composables/genericGoals/timeline'
 import { transformString } from '@/composables/utils/formatter'
+import { useCreateGoals } from '@/composables/dashboard/goals/create'
 
 const { userGoal } = useSmartGoal()
-const { saveUnauthorisedGoal, steps, loading } = useGenerateGoalActionableStep()
+const { steps, loading } = useGenerateGoalActionableStep()
 
-
+const { createGoals } = useCreateGoals()
 
 </script>
 

@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import { CircleX } from 'lucide-vue-next'
 
-import { useSmartGoal } from '@/composables/goals/smart'
+import { useSmartGoal } from '@/composables/genericGoals/smart'
 
 
 const { isComponentOpen, step, closeModal } = useSmartGoal()
@@ -26,5 +26,3 @@ const { isComponentOpen, step, closeModal } = useSmartGoal()
 
 
 </script>
-
-
