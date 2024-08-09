@@ -19,7 +19,7 @@ definePageMeta({
 			title: 'Goals',
 			description: 'Manage your goals here',
 			btnText: 'Create New Goal',
-			btnCall: () => useRouter().push('/booking-types/create'),
+			btnCall: () => useRouter().push('/goals/create'),
 			shouldShowFab: true,
 			shouldShowTab: usePageHeader().isLargeScreen.value
 
