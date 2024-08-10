@@ -38,7 +38,7 @@
 </template>
 
 <script lang='ts' setup>
-import { useSmartGoal } from '@/composables/goals/smart'
+import { useSmartGoal } from '@/composables/genericGoals/smart'
 
 const { checkIfGoalIsSmart, userGoal } = useSmartGoal()
 
