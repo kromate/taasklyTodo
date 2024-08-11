@@ -1,11 +1,11 @@
 <template>
-    <div class="tab-body border-b border-dark">
-        <span v-for="tab in (tabs as string[])" :key="tab" :class="['tab-item transite', tab == selected ? 'active' : '']" @click="onClick(tab)">{{ formatTabText(tab) }}</span>
-    </div>
+	<div class="tab-body border-b border-dark hide-scrollbar">
+		<span v-for="tab in (tabs as string[])" :key="tab" :class="['tab-item transite', tab == selected ? 'active' : '']" @click="onClick(tab)">{{ formatTabText(tab) }}</span>
+	</div>
 </template>
 
 <script setup lang="ts">
-import { transformString } from '@/composables/utils/formatter';
+import { transformString } from '@/composables/utils/formatter'
 
 const formatTabText = (text: string) => {
     return text.replace(/_/g, ' ')

@@ -5,9 +5,9 @@ import { useAlert } from '@/composables/core/notification'
 import { useUser } from '@/composables/auth/user'
 
 export const useCreateGoals = () => {
-    const createGoals = async (goal) => {
-        const { steps, userGoal } = useGenerateGoalActionableStep()
+    const { steps, userGoal, step } = useGenerateGoalActionableStep()
 
+    const createGoals = async (goal) => {
         const { id: user_id } = useUser()
 
         const id = uuidv4()
@@ -24,8 +24,13 @@ export const useCreateGoals = () => {
 
         await setFirestoreDocument('goals', sent_data.id, sent_data)
         useRouter().push(`/goals/${sent_data.id}`)
-
     }
 
-    return { createGoals }
+    const resetForm = () => {
+        step.value = 1
+        userGoal.value = ''
+        steps.value = []
+    }
+
+    return { createGoals, resetForm }
 }

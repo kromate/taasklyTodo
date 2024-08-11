@@ -1,10 +1,12 @@
 import { watchDebounced } from '@vueuse/core'
 import { ProfileType } from '../types/profile'
+import { afterAuthCheck } from '../utils'
 import { convertObjWithRefToObj } from '@/composables/utils/formatter'
 import { useAlert } from '@/composables/core/notification'
 import { useUser } from '@/composables/auth/user'
 import { callFirebaseFunction } from '@/firebase/functions'
 import { useGenerateGoalActionableStep } from '@/composables/genericGoals/timeline'
+import { getSingleFirestoreDocument } from '@/firebase/firestore/fetch'
 
 
 
@@ -41,7 +43,9 @@ export const useCreateProfile = () => {
 			const res = await callFirebaseFunction('createUserProfileForGoals', sent_date) as any
 			if (res.success) {
 				setUserProfile(sent_date)
-				useRouter().push('/goals')
+				const redirectUrl = useUser().redirectUrl.value
+				useUser().redirectUrl.value = null
+				useRouter().push(redirectUrl ?? '/goals')
 			} else {
 				useAlert().openAlert({ type: 'ERROR', msg: res.msg })
 				loading.value = false
@@ -57,8 +61,20 @@ export const useCreateProfile = () => {
 		profileFormState.email.value = useUser().user.value?.email as string
 		profileFormState.name.value = useUser().user.value?.displayName as string
 	}
+
+	const checkIfProfileExists = async () => {
+		const { id: user_id } = useUser()
+		const userProfile = ref<ProfileType>()
+		await getSingleFirestoreDocument('users', user_id.value as string, userProfile)
+		if (userProfile.value?.id) {
+			const redirectUrl = useUser().redirectUrl.value
+			useUser().redirectUrl.value = null
+			useRouter().push(redirectUrl ?? '/goals')
+		}
+	}
+
 	return {
-		createProfile,
+		createProfile, checkIfProfileExists,
 		profileFormState,
 		loading,
 		initForm,
@@ -79,7 +95,7 @@ export const useUsername = () => {
 		profileFormState.username.value = profileFormState.username.value.replace(/ /g, '').toLowerCase()
 
 
-			const { exists } = await callFirebaseFunction('checkUsernameForGoals', { username: profileFormState.username.value }) as any
+		const { exists } = await callFirebaseFunction('checkUsernameForGoals', { username: profileFormState.username.value }) as any
 
 
 

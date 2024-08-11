@@ -9,8 +9,8 @@ export const afterAuthCheck = async (user: User | null) => {
             useRouter().push('/auth/profile')
             return
         }
-        const redirectUrl = useUser().redirectUrl.value
-        useUser().redirectUrl.value = null
+         const redirectUrl = useUser().redirectUrl.value
+         useUser().redirectUrl.value = null
          useRouter().push(redirectUrl ?? '/goals')
     }
 }

@@ -44,14 +44,18 @@
 import { useCreateProfile, useUsername } from '@/composables/auth/profile/create'
 import { useAuthModal } from '@/composables/core/modals'
 import { useUser } from '@/composables/auth/user'
-const { loading, profileFormState, createProfile, initForm, phoneNumError } = useCreateProfile()
+const { loading, profileFormState, createProfile, initForm, phoneNumError, checkIfProfileExists } = useCreateProfile()
 const { isUsernameAvailable, loading: usernameLoading } = useUsername()
+
+
 
 initForm()
 
 const { user } = useUser()
 
-
+onMounted(() => {
+	checkIfProfileExists()
+})
 
 const disabled = computed(() => {
 	return !isUsernameAvailable.value || usernameLoading.value || phoneNumError.value || loading.value
@@ -65,10 +69,7 @@ definePageMeta({
 </script>
 
 <style scoped lang='scss'>
-
-
 input:checked {
 	@apply hidden
 }
-
 </style>

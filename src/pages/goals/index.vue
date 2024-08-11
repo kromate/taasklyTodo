@@ -1,16 +1,15 @@
 <template>
 	<main>
-		<section v-if='!loading' class="p-4 grid md:grid-cols-2 gap-4">
-			<nuxt-link class="flex flex-col gap-3 items-start p-4 border border-line rounded-md " :to='`/goals/${goal.id}`' v-for='goal in userGoals' :key='goal.id'>
+		<section v-if="!loading" class="p-4 grid md:grid-cols-2 gap-4">
+			<nuxt-link v-for="goal in userGoals" :key="goal.id" class="flex flex-col gap-3 items-start p-4 border border-line rounded-md " :to="`/goals/${goal.id}`">
 				<h4 class="!border-dark bg-hover card_ans text-sm md:text-base h-full">
 					{{ goal.goal }}
 				</h4>
-
 			</nuxt-link>
 		</section>
 
-		<section v-else>
-			<Skeleton />
+		<section v-else class="p-4">
+			<Skeleton height="50px" />
 		</section>
 
 		<section v-if="userGoals.length === 0 && !loading" class="center flex-col min-h-[70vh] gap-4">
@@ -23,15 +22,14 @@
 				Create
 			</nuxt-link>
 		</section>
-
 	</main>
 </template>
 
 <script setup lang="ts">
 import { Target } from 'lucide-vue-next'
 import { usePageHeader } from '@/composables/utils/header'
-import { useFetchUserGoals } from '@/composables/dashboard/goals/fetch';
-
+import { useFetchUserGoals } from '@/composables/dashboard/goals/fetch'
+import { useCreateGoals } from '@/composables/dashboard/goals/create'
 
 
 const { fetchUserGoals, loading, userGoals } = useFetchUserGoals()
@@ -41,6 +39,7 @@ fetchUserGoals()
 definePageMeta({
 	layout: 'dashboard',
 	middleware: ['is-authenticated', () => {
+		 useCreateGoals().resetForm()
 		usePageHeader().setPageHeader({
 			title: 'Goals',
 			description: 'Manage your goals here',

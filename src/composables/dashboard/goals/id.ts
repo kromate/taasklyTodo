@@ -1,17 +1,15 @@
 import { getSingleFirestoreDocument } from '@/firebase/firestore/fetch'
 import { useAlert } from '@/composables/core/notification'
 
-
-
-export const useFetchGoalsById = () => {
-    const goalDetails = ref({})
+    const goalDetails = ref({} as Record<string, any>)
     const loading = ref(false)
 
-    const fetchGoalsById = async (id) => {
+export const useFetchGoalsById = () => {
+    const fetchGoalsById = async (id:string) => {
         loading.value = true
-        
 
-        	try {
+
+        try {
             await getSingleFirestoreDocument('goals', id, goalDetails)
             loading.value = false
         } catch (e: any) {

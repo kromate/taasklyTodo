@@ -1,7 +1,7 @@
 <template>
 	<section class=" flex flex-col items-center gap-4 relative h-[calc(100vh-140px)] w-full ">
 		<div class="flex gap-4 items-center justify-center flex-wrap mt-16">
-			<h1 class="outline text-4xl text-center font-black sm:text-5xl md:text-4xl lg:text-6xl xl:text-7xl tracking-normal text-dark poppins w-full center">
+			<h1 class="outline text-4xl text-center font-black sm:text-5xl md:text-4xl lg:text-6xl xl:text-7xl text-dark poppins w-full center">
 				{{ loading ? 'Checking if your goal is S.M.A.R.T?' : 'S.M.A.R.T-ify Goal' }}
 			</h1>
 		</div>

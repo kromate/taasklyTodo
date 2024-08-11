@@ -55,7 +55,7 @@ export const useGenerateGoalActionableStep = () => {
 
     return {
         unauthorisedGoalSync, userGoal,
-        saveUnauthorisedGoal,
+        saveUnauthorisedGoal, step,
         generateGoalTimeline,
         loading,
         steps

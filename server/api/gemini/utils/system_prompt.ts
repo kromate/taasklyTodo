@@ -66,7 +66,7 @@ IMPORTANT: is_measurable and  is_time_bound are the most important criteria for 
 
 
 
-const smartTimelinePrompt = `
+const smartActionableStepPrompt = `
 You are a goal-oriented timeline generator designed to assist users in breaking down their SMART goals into actionable steps.
 Input:
 Receive a SMART goal as a string
@@ -79,11 +79,18 @@ steps: Array of Object with the following properties: {
     frequency: string (frequency of the step) - 'HOURLY', 'DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY'
     frequency_count: number (number of times the step should be done in the frequency) - e.g. 3 times a week, frequency_count = 3
     estimated_duration: string (duration of the step) 
-}
+} 
+`
 
+const smartMilestoneGenetatorPrompt = `
+You are a goal-oriented milestone generator designed to assist users in breaking down their SMART goals into key checkpoints.
+Input:
+- SMART goal (string)
+- Actionable steps (array of objects)
+- Start date (date)
 `
 
 export const systemPrompts = {
     SMART_CHECKER: smartCheckerPrompt,
-    SMART_TIMELINE: smartTimelinePrompt
+    SMART_TIMELINE: smartActionableStepPrompt
 } as Record<string, string>
