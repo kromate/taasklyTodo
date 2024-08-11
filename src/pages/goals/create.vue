@@ -1,9 +1,8 @@
 <template>
-    <main class="p-4 flex flex-col gap-4">
-        <PagesDashboardGoalsCreateStepOne v-if="step === 1" />
-        <PagesDashboardGoalsCreateStepTwo v-if="step === 2" />
-
-    </main>
+	<main class="p-4 flex flex-col gap-4">
+		<PagesDashboardGoalsCreateStepOne v-if="step === 1" />
+		<PagesDashboardGoalsCreateStepTwo v-if="step === 2" />
+	</main>
 </template>
 
 <script setup lang="ts">

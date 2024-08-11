@@ -10,8 +10,10 @@ export const useCreateGoals = () => {
 
         const { id: user_id } = useUser()
 
+        const id = uuidv4()
+
         const sent_data = {
-            id: uuidv4(),
+            id,
             goal: userGoal.value,
             steps: steps.value,
             user_id: user_id.value,
@@ -21,9 +23,8 @@ export const useCreateGoals = () => {
         }
 
         await setFirestoreDocument('goals', sent_data.id, sent_data)
+        useRouter().push(`/goals/${sent_data.id}`)
 
-
-        console.log(sent_data)
     }
 
     return { createGoals }

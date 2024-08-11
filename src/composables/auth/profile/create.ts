@@ -4,7 +4,7 @@ import { convertObjWithRefToObj } from '@/composables/utils/formatter'
 import { useAlert } from '@/composables/core/notification'
 import { useUser } from '@/composables/auth/user'
 import { callFirebaseFunction } from '@/firebase/functions'
-import { useGenerateGoalActionableStep } from 'src/composables/genericGoals/timeline'
+import { useGenerateGoalActionableStep } from '@/composables/genericGoals/timeline'
 
 
 
@@ -20,7 +20,6 @@ const profileFormState = {
 
 export const useCreateProfile = () => {
 	const { unauthorisedGoalSync } = useGenerateGoalActionableStep()
-	console.log(unauthorisedGoalSync.value)
 	const { id, setUserProfile } = useUser()
 	const loading = ref(false)
 	const phoneNumError = ref()

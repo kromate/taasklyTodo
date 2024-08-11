@@ -38,17 +38,16 @@
 										<span><b>Frequency:</b> {{ transformString(step.frequency) }}</span>
 										<span><b>Frequency Count:</b> {{ step.frequency_count }}</span>
 										<span><b>Estimated Duration:</b> {{ step.estimated_duration }}</span>
-
 									</footer>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="card_ans !border-greenx bg-[#000000] text-white flex flex-wrap gap-1 items-center !text-lg">
-					<button class="inline underline font-bold">
+				<div class="card_ans !border-greenx bg-[#000000] text-white flex flex-wrap gap-1 items-center !text-lg" v-if='!isLoggedIn'>
+					<button class="inline underline font-bold" @click="saveUnauthorisedGoal('/auth/login')">
 						Sign in
-					</button> or <button class="inline underline font-bold">
+					</button> or <button class="inline underline font-bold" @click="saveUnauthorisedGoal('/auth/register')">
 						create an account
 					</button> to
 					<span class="font-semibold text-[#cadef4]">save your actionable steps</span>,
@@ -61,6 +60,9 @@
 						Get Started
 					</button>
 				</div>
+				<button class="btn bg-dark text-light" @click="createGoals" v-else>
+					Save and proceed
+				</button>
 			</section>
 		</transition>
 		<div v-if="loading" class="flex px-4 w-full">
@@ -73,9 +75,14 @@
 import { useSmartGoal } from '@/composables/genericGoals/smart'
 import { useGenerateGoalActionableStep } from '@/composables/genericGoals/timeline'
 import { transformString } from '@/composables/utils/formatter'
+import { useUser } from '@/composables/auth/user';
+import { useCreateGoals } from '@/composables/dashboard/goals/create'
 
+
+const { isLoggedIn } = useUser()
 const { userGoal } = useSmartGoal()
 const { saveUnauthorisedGoal, steps, loading } = useGenerateGoalActionableStep()
+const { createGoals } = useCreateGoals()
 
 
 

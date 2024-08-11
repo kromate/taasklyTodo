@@ -2,10 +2,7 @@
 	<section class=" flex flex-col items-center gap-4 relative h-[calc(100vh-140px)] w-full ">
 		<div class="flex gap-4 items-center justify-center flex-wrap mt-16">
 			<h1 class="outline text-4xl text-center font-black sm:text-5xl md:text-4xl lg:text-6xl xl:text-7xl tracking-normal text-dark poppins w-full center">
-
-
 				{{ loading ? 'Checking if your goal is S.M.A.R.T?' : 'S.M.A.R.T-ify Goal' }}
-
 			</h1>
 		</div>
 
@@ -27,7 +24,7 @@
 			</div>
 		</transition>
 		<transition name="show" appear>
-			<section class="pb-96" v-if="userGoal && !loading && !hasUserGoalChanged">
+			<section v-if="userGoal && !loading && !hasUserGoalChanged" class="pb-96">
 				<div class="flex flex-col gap-4 max-w-[560px] w-full border border-line mx-auto p-4 px-4 shadow-md rounded-lg mb-12 ">
 					<div class="field">
 						<h4>Your Goal:</h4>
@@ -67,7 +64,6 @@
 					</transition>
 				</div>
 			</section>
-
 		</transition>
 
 
