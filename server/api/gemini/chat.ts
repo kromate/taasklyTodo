@@ -41,7 +41,6 @@ export default defineEventHandler(async (event) => {
       safetySettings: safetySetting
     })
 
-    console.log(prompt)
 
     const result = await model.generateContent(prompt)
     const response = result.response
@@ -66,4 +65,3 @@ export default defineEventHandler(async (event) => {
 })
 
 
-// I aim to increase my confidence by improving my fitness level through exercising for 30 minutes, 3 times a week, and adopting a balanced diet for the next 6 months. I will track my progress by taking weekly measurements and noting any positive changes in my physical and mental well-being.

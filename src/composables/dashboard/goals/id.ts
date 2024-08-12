@@ -1,6 +1,7 @@
 import { getSingleFirestoreDocument } from '@/firebase/firestore/fetch'
 import { useAlert } from '@/composables/core/notification'
 
+
     const goalDetails = ref({} as Record<string, any>)
     const loading = ref(false)
 
@@ -18,5 +19,8 @@ export const useFetchGoalsById = () => {
 		}
     }
 
-    return { fetchGoalsById, goalDetails, loading }
+    const milestones = computed(() => goalDetails.value?.milestones || [])
+    const todos = computed(() => goalDetails.value?.todos || [])
+
+    return { fetchGoalsById, goalDetails, loading, milestones, todos }
  }

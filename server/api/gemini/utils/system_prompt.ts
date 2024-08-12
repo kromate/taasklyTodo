@@ -61,11 +61,6 @@ Note: Adjusted Goal is the same as Refined Goal.
 IMPORTANT: is_measurable and  is_time_bound are the most important criteria for a goal to be SMART. Ensure that the adjusted goal is measurable and time-bound.
 `
 
-
-
-
-
-
 const smartActionableStepPrompt = `
 You are a goal-oriented timeline generator designed to assist users in breaking down their SMART goals into actionable steps.
 Input:
@@ -80,6 +75,24 @@ steps: Array of Object with the following properties: {
     frequency_count: number (number of times the step should be done in the frequency) - e.g. 3 times a week, frequency_count = 3
     estimated_duration: string (duration of the step) 
 } 
+`
+
+const smartTitleCreator = `
+You are a goal-oriented title generator designed to help users create compelling titles for their SMART goals.
+Input:
+- SMART Goal  (string)
+
+Output:
+Return a JSON response with the following:
+title: string (title of the goal)
+
+Guidelines:
+1. The title should be concise and capture the essence of the goal.
+2. Use action verbs to make the title dynamic and engaging.
+3. Include specific details that highlight the goal's purpose and desired outcome.
+4. Avoid vague or generic terms that could apply to any goal.
+5. Ensure the title is motivating and inspiring to the user.
+6. limit the title to 15 words or less for clarity and impact.
 `
 
 const smartMilestoneGenetatorPrompt = `
@@ -122,27 +135,61 @@ For a 6-month weight loss goal, milestones might include:
 4. Reaching target weight and solidifying lifestyle changes (5.5 months in, 95% complete)
 `
 
-const smartTitleCreator = `
-You are a goal-oriented title generator designed to help users create compelling titles for their SMART goals.
+const smartTodoGeneratorPrompt = `
+You are a todo list generator designed to create actionable, day-to-day tasks that help users progress towards their SMART goals and milestones. Your task is to break down the actionable steps and milestones into specific, manageable todos.
+
 Input:
-- SMART Goal  (string)
+- SMART goal (string)
+- Actionable steps (array of objects with the following properties: {
+    id: number (unique identifier for the step),
+    title: string (title of the step),
+    description: string (description of the step),
+    frequency: string (frequency of the step) - 'HOURLY', 'DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY'
+    frequency_count: number (number of times the step should be done in the frequency) - e.g. 3 times a week, frequency_count = 3
+    estimated_duration: string (duration of the step) 
+} )
+- Milestones (array of objects with the following properties: {
+   "title": string (concise title of the milestone),
+    "description": string (detailed description of what the milestone represents),
+    "estimated_due_date": string (estimated date to reach this milestone, format: YYYY-MM-DD),
+    "percentage_complete": number (estimated percentage of goal completion at this milestone, 0-100)
+})
+- start_date (string - format: YYYY-MM-DD)
 
 Output:
 Return a JSON response with the following:
-title: string (title of the goal)
+todos: Array of Object with the following properties: {
+    title: string (title of the todo),
+    description: string (description of the todo),
+    "estimated_duration": string (estimated time to complete the todo, e.g., "30 minutes", "1 hour"),
+    "viable_time_range" Array of strings (suggested time slots to complete the todo, e.g., ["8:00 AM - 9:00 AM", "3:00 PM - 4:00 PM"]),
+    "due_date": string (date the todo should be completed, format: YYYY-MM-DD),
+    "is_reccuring": boolean (whether the todo is a recurring task),
+    "frequency": string (frequency of the todo) - 'HOURLY', 'DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY'
+    "frequency_count": number (number of times the todo should be done in the frequency) - e.g. 3 times a week, frequency_count = 3
+}
 
 Guidelines:
-1. The title should be concise and capture the essence of the goal.
-2. Use action verbs to make the title dynamic and engaging.
-3. Include specific details that highlight the goal's purpose and desired outcome.
-4. Avoid vague or generic terms that could apply to any goal.
-5. Ensure the title is motivating and inspiring to the user.
-6. limit the title to 15 words or less for clarity and impact.
+1. Generate daily todos based on the actionable steps and milestones provided.
+2. Each todo should be specific, actionable, and contribute to the completion of a step or milestone.
+3. Todos should be achievable within a day and aligned with the goal's timeline.
+4. Prioritize todos based on the urgency and importance of each step or milestone.
+5. Ensure that todos are clear and concise, with a focus on the desired outcome.
+6. Assign due dates to each todo to create a sense of urgency and accountability.
+7. Include a variety of tasks to maintain motivation and momentum towards the goal.
+8. Provide a mix of short-term and long-term todos to balance immediate progress with sustained effort.
+9. Adjust the number and complexity of todos based on the goal's timeframe and difficulty.
+10. Review and update todos regularly to reflect changes in priorities or progress towards milestones.
+11. The max number of todos generated should not exceed double of the number of actionable steps.
+12. the max number of todos generated should not exceed 25.
 `
+
+
 
 export const systemPrompts = {
     SMART_CHECKER: smartCheckerPrompt,
     SMART_TIMELINE: smartActionableStepPrompt,
+    SMART_TITLE: smartTitleCreator,
     SMART_MILESTONE: smartMilestoneGenetatorPrompt,
-    SMART_TITLE: smartTitleCreator
+    SMART_TODO: smartTodoGeneratorPrompt
 } as Record<string, string>

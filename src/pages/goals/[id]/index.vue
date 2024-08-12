@@ -7,7 +7,7 @@
 			<h4 class="!border-dark bg-hover card_ans text-base md:text-xl font-normal">
 				{{ goalDetails.desc }}
 			</h4>
-			<button class="btn w-full bg-dark text-light" @click="initStartGoal(goalDetails)">
+			<button v-if="!goalDetails.started" class="btn w-full bg-dark text-light" @click="initStartGoal(goalDetails)">
 				Click to start this goal
 			</button>
 		</article>
