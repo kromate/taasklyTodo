@@ -54,7 +54,6 @@ const createMilestone = async () => {
 
 
             milestones.value = JSON.parse(data.value).milestones
-            console.log(milestones.value)
         } catch (e:any) {
             useAlert().openAlert({ type: 'ERROR', msg: e instanceof Error ? e.message : 'An unexpected error occurred, please try again' })
             throw new Error(e)
@@ -83,9 +82,8 @@ const createTodo = async () => {
             if (data.value === undefined) {
                 throw new Error('No response received from the server for the todo')
             }
-console.log(data.value)
+
         todos.value = JSON.parse(data.value).todos
-        console.log(todos.value)
         } catch (e:any) {
         useAlert().openAlert({ type: 'ERROR', msg: e instanceof Error ? e.message : 'An unexpected error occurred, please try again' })
         throw new Error(e)

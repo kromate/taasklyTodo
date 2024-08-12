@@ -30,7 +30,7 @@ export default {
   vite: {
 
     plugins: [
-      nodePolyfills(),
+      nodePolyfills()
       // eslintPlugin({ exclude: ['**/node_modules/**'] })
     ],
     resolve: {
