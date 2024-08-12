@@ -1,10 +1,13 @@
 <template>
 	<main class="p-4">
 		<article v-if="!loading" class="flex flex-col gap-3 items-start p-4 border border-line rounded-md">
-			<h4 class="!border-dark bg-hover card_ans text-base md:text-xl">
-				{{ goalDetails.goal }}
+			<h2 class="font-medium  text-base md:text-2xl">
+				{{ goalDetails.title }}
+			</h2>
+			<h4 class="!border-dark bg-hover card_ans text-base md:text-xl font-normal">
+				{{ goalDetails.desc }}
 			</h4>
-			<button class="btn w-full bg-dark text-light">
+			<button class="btn w-full bg-dark text-light" @click="initStartGoal(goalDetails)">
 				Click to start this goal
 			</button>
 		</article>
@@ -33,7 +36,9 @@ import milestone from '@/pages/goals/[id]/milestone.vue'
 import todo from '@/pages/goals/[id]/todo.vue'
 import accountability_partner from '@/pages/goals/[id]/partner.vue'
 import { useFetchGoalsById } from '@/composables/dashboard/goals/id'
+import { useStartGoal } from '@/composables/dashboard/goals/start'
 
+const { initStartGoal } = useStartGoal()
 const { fetchGoalsById, goalDetails, loading } = useFetchGoalsById()
 
 const goal_id = useRoute().params.id as string

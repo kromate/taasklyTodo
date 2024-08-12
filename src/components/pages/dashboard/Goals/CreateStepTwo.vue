@@ -45,8 +45,9 @@
 					</div>
 				</div>
 
-				<button class="btn bg-dark text-light" @click="createGoals">
-					Save and proceed
+				<button class="btn bg-dark text-light" :disabled="createLoading" @click="createGoals">
+					<span v-if="!createLoading">	Save and proceed</span>
+					<Spinner v-else />
 				</button>
 			</section>
 		</transition>
@@ -65,7 +66,7 @@ import { useCreateGoals } from '@/composables/dashboard/goals/create'
 const { userGoal } = useSmartGoal()
 const { steps, loading } = useGenerateGoalActionableStep()
 
-const { createGoals } = useCreateGoals()
+const { createGoals, loading: createLoading } = useCreateGoals()
 
 </script>
 

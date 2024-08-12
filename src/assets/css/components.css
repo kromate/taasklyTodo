@@ -116,7 +116,7 @@
     }
 
     .modal-btn {
-        @apply center px-4 py-2.5 border border-dark text-light hover:text-light bg-baby_purple transite w-full justify-center disabled:bg-gray-500 cursor-pointer disabled:cursor-not-allowed rounded-lg;
+        @apply center px-4 py-2.5 border border-dark text-light hover:text-light bg-dark transite w-full justify-center disabled:bg-gray-500 cursor-pointer disabled:cursor-not-allowed rounded-lg;
     }
 
     .modal-btn-secondary {

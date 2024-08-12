@@ -44,7 +44,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="card_ans !border-greenx bg-[#000000] text-white flex flex-wrap gap-1 items-center !text-lg" v-if='!isLoggedIn'>
+				<div v-if="!isLoggedIn" class="card_ans !border-greenx bg-[#000000] text-white flex flex-wrap gap-1 items-center !text-lg">
 					<button class="inline underline font-bold" @click="saveUnauthorisedGoal('/auth/login')">
 						Sign in
 					</button> or <button class="inline underline font-bold" @click="saveUnauthorisedGoal('/auth/register')">
@@ -60,8 +60,9 @@
 						Get Started
 					</button>
 				</div>
-				<button class="btn bg-dark text-light" @click="createGoals" v-else>
-					Save and proceed
+				<button v-else class="btn bg-dark text-light" :disabled="createLoading" @click="createGoals">
+					<span v-if="!createLoading">	Save and proceed</span>
+					<Spinner v-else />
 				</button>
 			</section>
 		</transition>
@@ -75,14 +76,14 @@
 import { useSmartGoal } from '@/composables/genericGoals/smart'
 import { useGenerateGoalActionableStep } from '@/composables/genericGoals/timeline'
 import { transformString } from '@/composables/utils/formatter'
-import { useUser } from '@/composables/auth/user';
+import { useUser } from '@/composables/auth/user'
 import { useCreateGoals } from '@/composables/dashboard/goals/create'
 
 
 const { isLoggedIn } = useUser()
 const { userGoal } = useSmartGoal()
 const { saveUnauthorisedGoal, steps, loading } = useGenerateGoalActionableStep()
-const { createGoals } = useCreateGoals()
+const { createGoals, loading: createLoading } = useCreateGoals()
 
 
 

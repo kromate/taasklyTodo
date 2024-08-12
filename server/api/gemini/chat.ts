@@ -41,6 +41,8 @@ export default defineEventHandler(async (event) => {
       safetySettings: safetySetting
     })
 
+    console.log(prompt)
+
     const result = await model.generateContent(prompt)
     const response = result.response
     const gemini_response = response.text()

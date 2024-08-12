@@ -2,8 +2,11 @@
 	<main>
 		<section v-if="!loading" class="p-4 grid md:grid-cols-2 gap-4">
 			<nuxt-link v-for="goal in userGoals" :key="goal.id" class="flex flex-col gap-3 items-start p-4 border border-line rounded-md " :to="`/goals/${goal.id}`">
-				<h4 class="!border-dark bg-hover card_ans text-sm md:text-base h-full">
-					{{ goal.goal }}
+				<h2 class="font-medium  text-base md:text-xl">
+					{{ goal.title }}
+				</h2>
+				<h4 class="!border-dark bg-hover card_ans text-sm md:text-base h-full font-normal">
+					{{ goal.desc }}
 				</h4>
 			</nuxt-link>
 		</section>
