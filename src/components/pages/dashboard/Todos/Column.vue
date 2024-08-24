@@ -15,7 +15,7 @@
 			:list="tasks"
 			group="tasks"
 			item-key="id"
-			class="flex flex-col gap-4"
+			class="flex flex-col gap-4 min-h-screen"
 			@change="updateTasks"
 		>
 			<template #item="{ element }">

@@ -14,7 +14,7 @@ const integrationKeys = {
 
 
 export const useLinkGoogleCalendar = () => {
-    const { id: user_id } = useUser()
+    const { id: user_id, currentGoogleCalToken } = useUser()
     const loading = ref(false)
 
     const link = async () => {
@@ -39,6 +39,13 @@ export const useLinkGoogleCalendar = () => {
                                 updated_at: new Date().toISOString()
                             })
                             localStorage.setItem('oauth_result', '')
+
+                            currentGoogleCalToken.value = {
+                                access_token: oauthResult.access_token,
+                                refresh_token: oauthResult.refresh_token,
+                                email: oauthResult.email,
+                                expiry_date: oauthResult.expiry_date
+                            } as any
                         } else {
                             useAlert().openAlert({ type: 'ERROR', msg: 'Error during token exchange' })
                         }

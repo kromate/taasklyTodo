@@ -50,7 +50,8 @@ const { initTabs, selected, tabViews, updateTab, tabs, onTabMounted } = useTabs(
 
 initTabs(
 	'actionable_step',
-	['actionable_step', 'milestone', 'todo', 'accountability_partner'],
+	// ['actionable_step', 'milestone', 'todo', 'accountability_partner'],
+	['actionable_step', 'milestone', 'todo'],
 	markRaw({ actionable_step, milestone, todo, accountability_partner })
 )
 

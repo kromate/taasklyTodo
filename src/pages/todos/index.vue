@@ -16,8 +16,8 @@
 				:tasks="column.tasks"
 				@add-task="addTask"
 				@delete-task="deleteTask"
-				@update-task="updateTask"
 			/>
+			<!-- @update-task="updateTask" -->
 		</main>
 	</div>
 </template>
@@ -28,15 +28,17 @@ import { usePageHeader } from '@/composables/utils/header'
 import { type Column as ColumnType, type Task } from '@/composables/types'
 import { dummyTasks } from '@/composables/helpers/todo'
 import { useWeekDates } from '@/composables/dashboard/todo'
-import { useFetchUserGoogleCalEvents } from '@/composables/dashboard/integrations/googleCal/events/fetch'
+import { useFetchUserGoogleCalEvents } from '@/composables/dashboard/integrations/googleCal/fetch'
 
-// const { } = useFetchUserGoogleCalEvents()
+const { fetchUserGoogleCalEvents } = useFetchUserGoogleCalEvents()
+
+fetchUserGoogleCalEvents()
 
 const { weekDates } = useWeekDates()
 
 const columns = ref<ColumnType[]>([])
 
-const visibleColumns = ref<ColumnType[]>([])
+const visibleColumns = ref([] as any[])
 
 // Init function to distribute tasks across the week and assign to visibleColumns
 const initColumns = () => {

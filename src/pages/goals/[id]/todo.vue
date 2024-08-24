@@ -34,7 +34,7 @@
 
 
 		<section v-if="todos.length === 0 && goalDetails.started" class="center flex-col  gap-4">
-			<Milestone :size="80" />
+			<CheckSquare :size="80" />
 			<h1 class="text-xl font-bold mt-3">
 				No Todos have been created yet
 			</h1>

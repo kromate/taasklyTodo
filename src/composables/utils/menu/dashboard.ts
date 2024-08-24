@@ -1,4 +1,4 @@
-import { Link, Calendar, Clock, User, Settings, Grid3X3, CheckCheck } from 'lucide-vue-next'
+import { Link, Brain, Settings, Grid3X3, CheckCheck } from 'lucide-vue-next'
 
 export const dashboardRoutes = () => [
 
@@ -34,6 +34,14 @@ export const dashboardRoutes = () => [
 		icon: Grid3X3,
 		name: 'Integrations',
 		route: '/integrations',
+		type: 'all',
+		bg: '#e5e7eb',
+		color: '#18181B'
+	},
+	{
+		icon: Brain,
+		name: 'Assistant',
+		route: '/assistant',
 		type: 'all',
 		bg: '#e5e7eb',
 		color: '#18181B'

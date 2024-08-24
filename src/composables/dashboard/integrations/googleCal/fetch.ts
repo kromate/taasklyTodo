@@ -16,7 +16,15 @@ export const useFetchUserGoogleCalEvents = () => {
         fetchedEvents.value = []
 
         try {
-            await getFirestoreSubCollection('users', user_id.value!, 'integrations', fetchedEvents)
+            try {
+                const { data, error: fetchError } = await useFetch('/api/googleCal/fetch', {
+                    method: 'GET'
+                }) as { data: Ref<string>, error: any }
+
+                console.log(data)
+            } catch (e) {
+                throw new Error('No response received from the server')
+            }
             loading.value = false
         } catch (e: any) {
             loading.value = false
