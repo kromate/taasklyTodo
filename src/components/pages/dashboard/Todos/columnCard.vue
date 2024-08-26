@@ -1,15 +1,5 @@
 <template>
-	<div :class="['column-card', priorityClass]">
-		<!-- <icon
-			name="edit"
-			class="column-card-icon"
-			@click="$emit('edit', task)"
-		/> -->
-		<!-- <icon
-			name="delete"
-			class="column-card-icon-del"
-			@click="$emit('delete', task.id)"
-		/> -->
+	<div :class="['column-card border ', priorityClass]">
 		<h3 class="column-card-title">
 			{{ task.title }}
 		</h3>
@@ -48,9 +38,8 @@ const priorityClass = computed(() => {
 
 <style scoped>
 .column-card {
-  padding: 1rem;
-  border-radius: 0.25rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  @apply p-4 rounded-lg shadow-sm;
+
 }
 
 .column-card-title {

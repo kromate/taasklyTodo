@@ -4,11 +4,6 @@
 			<h2 class="text-xl font-medium mb-3">
 				{{ formattedDate }}
 			</h2>
-			<!-- <Plus
-				name="add"
-				class="column-card-header-icon"
-				@click="openAddTaskModal"
-			/> -->
 		</header>
 
 		<draggable
@@ -50,6 +45,8 @@ const props = defineProps({
     required: true
   }
 })
+
+console.log(props)
 
 const emit = defineEmits<{(e: 'add-task', date: string, task: Task): void;
   (e: 'update-task', date: string, taskId: string | null, updatedTask:Task[]): void;

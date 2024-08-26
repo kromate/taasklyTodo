@@ -43,6 +43,9 @@
 
 			<div class=" absolute bottom-0 flex flex-col gap-2 w-full p-4">
 				<slot name="footer">
+					<nuxt-link to="/focus" class="btn">
+						Focus Mode
+					</nuxt-link>
 					<AvatarDropdown />
 				</slot>
 			</div>
@@ -75,7 +78,7 @@ defineProps({
 <style scoped lang="scss">
 
 :deep(a) {
-	@apply text-grey_two w-full lg:h-11 h-10 lg:px-6 lg:pr-3 text-4xl duration-75 rounded-md  ;
+	@apply text-grey_two w-full lg:h-11 h-10 lg:px-6 lg:pr-3  duration-75 rounded-md  ;
 &:hover.use-hover{
 	@apply bg-hover;
 }
