@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="border-x border-dark h-full">
 		Calendar
 	</div>
 </template>

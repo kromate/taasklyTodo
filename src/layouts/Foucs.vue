@@ -1,7 +1,9 @@
 <template>
 	<div class=" min-h-screen max-w-screen relative isolate bg-[#e0e7ff] w-full">
-		<BG />
-
+		<!-- <BG /> -->
+		<section class="flex flex-col ">
+			<slot />
+		</section>
 		<ModalBase />
 		<Alert />
 	</div>
