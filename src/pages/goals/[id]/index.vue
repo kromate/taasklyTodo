@@ -41,9 +41,14 @@ import { useStartGoal } from '@/composables/dashboard/goals/start'
 const { initStartGoal } = useStartGoal()
 const { fetchGoalsById, goalDetails, loading } = useFetchGoalsById()
 
-const goal_id = useRoute().params.id as string
 
-fetchGoalsById(goal_id)
+watch(() => useRoute().params.id, async (newId) => {
+	if (newId) {
+		fetchGoalsById(newId as string)
+	}
+	}, { immediate: true }
+)
+
 
 
 const { initTabs, selected, tabViews, updateTab, tabs, onTabMounted } = useTabs()

@@ -6,11 +6,16 @@
 			</h2>
 		</header>
 
+		<section>
+			<input type="text" class="input-field" placeholder="Enter a todo for the day">
+		</section>
+
 		<draggable
+			v-if="false"
 			:list="tasks"
 			group="tasks"
 			item-key="id"
-			class="flex flex-col gap-4 min-h-screen"
+			class="flex flex-col gap-4 min-h-[30dvh] h-full"
 			@change="updateTasks"
 		>
 			<template #item="{ element }">
@@ -22,6 +27,12 @@
 				/>
 			</template>
 		</draggable>
+		<div v-else class="flex flex-col gap-4 min-h-[30dvh] h-full center">
+			<ListTodo :size="40" />
+			<p class="w-full text-center">
+				You have no todos for this day
+			</p>
+		</div>
 	</article>
 </template>
 
@@ -30,7 +41,7 @@
 
 import { format, parseISO } from 'date-fns'
 import draggable from 'vuedraggable'
-import { Plus } from 'lucide-vue-next'
+import { ListTodo } from 'lucide-vue-next'
 import ColumnCard from './columnCard.vue'
 import { Task } from '@/composables/types'
 

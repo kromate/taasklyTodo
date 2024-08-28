@@ -27,7 +27,7 @@ export const fetchAllUserActiveTodos = () => {
 
 
     const groupTodosByDate = computed(() => {
-        const groupedTasks = {}
+        const groupedTasks = {} as Record<string, any>
         const activeTodo = usersActiveGoal.value.map((goal: any) => goal.todos).flat()
 
 

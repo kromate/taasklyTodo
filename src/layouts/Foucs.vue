@@ -1,5 +1,5 @@
 <template>
-	<div class=" min-h-screen max-w-screen relative isolate bg-[#e0e7ff] w-full">
+	<div class="max-w-screen relative isolate bg-[#e0e7ff] w-full overflow-hidden">
 		<!-- <BG /> -->
 		<section class="flex flex-col ">
 			<slot />

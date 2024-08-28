@@ -1,5 +1,5 @@
 <template>
-	<main class="flex  h-dvh w-full">
+	<main class="flex  h-dvh w-full overflow-hidden">
 		<section id="todo" class="w-full">
 			<FocusTodoMain />
 		</section>

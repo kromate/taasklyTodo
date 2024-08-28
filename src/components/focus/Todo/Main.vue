@@ -1,11 +1,15 @@
 <template>
 	<div>
-		Main Todo
+		<PagesDashboardTodosColumn
+			:date="today"
+			:tasks="[]"
+		/>
 	</div>
 </template>
 
 <script setup lang="ts">
-
+const today = new Date().toISOString()
+const task = []
 </script>
 
 <style scoped>
