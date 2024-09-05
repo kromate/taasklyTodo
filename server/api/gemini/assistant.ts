@@ -32,7 +32,7 @@ const updateEventFunctionDeclaration = {
 			},
 			end: { type: 'STRING', description: 'New end time (ISO 8601 format)' }
 		},
-		required: ['eventId']
+		required: ['eventId', 'start', 'end']
 	}
 }
 
@@ -46,6 +46,34 @@ const deleteEventFunctionDeclaration = {
 		},
 		required: ['eventId']
 	}
+}
+
+const getCalendarEventsFunctionDeclaration = {
+	name: 'getCalendarEvents',
+	description: 'Get the user\'s calendar events for the next week',
+	parameters: {
+		type: 'OBJECT',
+        properties: {
+            eventId: { type: 'STRING', description: 'ID of the event to delete' }
+        },
+		required: []
+	}
+}
+
+const getCurrentDateFunctionDeclaration = {
+	name: 'getCurrentDate',
+	description: 'Get the current date and time in ISO 8601 format',
+  parameters: {
+    type: 'OBJECT',
+    properties: {
+      format: {
+        type: 'STRING',
+        description: 'The format of the date (ignored in this implementation)',
+        enum: ['ISO', 'UTC', 'local']
+      }
+    },
+    required: []
+  }
 }
 
 const addCalendarEvent = async (oAuth2Client: OAuth2Client, params: any) => {
@@ -88,7 +116,31 @@ const deleteCalendarEvent = async (oAuth2Client: OAuth2Client, params: any) => {
 	return `Event deleted with ID: ${params.eventId}`
 }
 
-	let oAuth2Client: OAuth2Client
+const getCalendarEvents = async (oAuth2Client: OAuth2Client) => {
+	const calendar = google.calendar({ version: 'v3', auth: oAuth2Client })
+	const now = new Date()
+	const oneWeekFromNow = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000)
+	const events = await calendar.events.list({
+		calendarId: 'primary',
+		timeMin: now.toISOString(),
+		timeMax: oneWeekFromNow.toISOString(),
+		singleEvents: true,
+		orderBy: 'startTime'
+	})
+
+	return events.data.items?.map((event) => ({
+		summary: event.summary,
+		description: event.description,
+		start: event.start?.dateTime,
+		end: event.end?.dateTime,
+		eventId: event.id
+	}))
+}
+
+const getCurrentDate = () => {
+	return new Date().toISOString()
+}
+let oAuth2Client: OAuth2Client
 
 export default defineEventHandler(async (event) => {
 	try {
@@ -105,7 +157,6 @@ export default defineEventHandler(async (event) => {
 			throw new Error('Missing required parameter: prompt')
 		}
 
-		let calendarContext = null
 		let calendarLinked = false
 
 		const cookies = parseCookies(event).currentGoogleCalToken
@@ -121,31 +172,6 @@ export default defineEventHandler(async (event) => {
 				expiry_date: googleCalendar.expiry_date
 			})
 
-			const calendar = google.calendar({ version: 'v3', auth: oAuth2Client })
-
-
-
-			const now = new Date()
-			const oneWeekFromNow = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000)
-			const events = await calendar.events.list({
-				calendarId: 'primary',
-				timeMin: now.toISOString(),
-				timeMax: oneWeekFromNow.toISOString(),
-				singleEvents: true,
-				orderBy: 'startTime'
-			})
-
-            calendarContext = events.data.items?.map((event) => {
-                return {
-                    summary: event.summary,
-                    description: event.description,
-                    start: event.start?.dateTime,
-                    end: event.end?.dateTime,
-                    eventId: event.id
-                }
-            })
-
-            console.log(calendarContext)
 			calendarLinked = true
 		}
 
@@ -163,10 +189,11 @@ export default defineEventHandler(async (event) => {
 				functionDeclarations: [
 					addEventFunctionDeclaration,
 					updateEventFunctionDeclaration,
-					deleteEventFunctionDeclaration
+					deleteEventFunctionDeclaration,
+                    getCalendarEventsFunctionDeclaration,
+                    getCurrentDateFunctionDeclaration
 				]
-            }
-
+			}
 		})
 
 		const chat = model.startChat({
@@ -176,9 +203,7 @@ export default defineEventHandler(async (event) => {
 		let assistantPrompt =
 			'You are an AI assistant helping with general tasks and questions.'
 		if (calendarLinked) {
-			assistantPrompt += ` The user has linked their Google Calendar. Here are their upcoming events for the next week: ${JSON.stringify(
-				calendarContext
-			)}.`
+			assistantPrompt += ' The user has linked their Google Calendar. You can use the getCalendarEvents function to fetch their upcoming events for the next week when needed.'
 		} else {
 			assistantPrompt +=
 				' The user hasn\'t linked their Google Calendar yet. Suggest linking it for more personalized calendar-related assistance when appropriate.'
@@ -186,26 +211,30 @@ export default defineEventHandler(async (event) => {
 		assistantPrompt += `
       The user's query is: "${prompt}". 
       Provide helpful suggestions, answer questions, or offer advice as needed. 
-      If the user wants to make changes to their calendar and it's linked, use the tools provided to make changes to their calendar`
+      If the user wants to make changes to their calendar and it's linked, use the tools provided to make changes to their calendar.
+      Remember to use the getCalendarEvents function first if you need to know about the user's upcoming events before making any changes or providing calendar-related information.`
 
 		const result = await chat.sendMessage(assistantPrompt)
 
 		let response = result.response.text()
-	const functions = {
-				addCalendarEvent: (params: any) =>
-					addCalendarEvent(oAuth2Client, params),
-				updateCalendarEvent: (params: any) =>
-					updateCalendarEvent(oAuth2Client, params),
-				deleteCalendarEvent: (params: any) =>
-					deleteCalendarEvent(oAuth2Client, params)
-			} as any
+		const functions = {
+			addCalendarEvent: (params: any) =>
+				addCalendarEvent(oAuth2Client, params),
+			updateCalendarEvent: (params: any) =>
+				updateCalendarEvent(oAuth2Client, params),
+			deleteCalendarEvent: (params: any) =>
+				deleteCalendarEvent(oAuth2Client, params),
+            getCalendarEvents: () => getCalendarEvents(oAuth2Client),
+            getCurrentDate: () => getCurrentDate()
+		} as any
+
 		// Check if the model wants to call a function
-        const functionCalls = result.response.functionCalls()
+		const functionCalls = result.response.functionCalls()
 
 		if (functionCalls && functionCalls.length > 0 && calendarLinked) {
 			for (const functionCall of functionCalls) {
 				const { name, args } = functionCall
-                console.log(name, args)
+				console.log(name, args)
 				if (name in functions) {
 					const functionResult = await functions[name](args)
 					response += `\n\nFunction called: ${name}\nResult: ${functionResult}`
