@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
       timeMax: endOfMonth.toISOString(),
       showDeleted: false,
       singleEvents: true,
-      maxResults: 2500. // Increased to ensure we get all events for the month
+      maxResults: 2500 // Increased to ensure we get all events for the month
     })
 
     console.log(`Fetched ${response.data.items?.length} events for ${startOfMonth.toLocaleString('default', { month: 'long' })} ${year}`)

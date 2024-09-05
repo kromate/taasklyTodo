@@ -69,6 +69,8 @@
 		<div v-if="loading" class="flex px-4 w-full">
 			<Skeleton radius="12px" height="280px" width="700px" class=" mx-auto px-4 max-w-[90%]" />
 		</div>
+
+
 		<div class="fixed bottom-2.5 inset-x-0 bg-white pt-2.5 px-3 center">
 			<form v-if="gemini_response && gemini_response!.percentage < 85" class="relative w-full md:max-w-[560px] flex flex-wrap mt-auto" @submit.prevent="checkIfGoalIsSmart">
 				<textarea ref="textarea" v-model="userGoal" class="input-field  !pb-4 !pt-4 pr-36 w-full resize-none overflow-hidden h-auto  transition-all duration-300 ease-in-out" placeholder="Enter your goal (e.g., Learn a new language)" rows="1" @input="adjustTextareaHeight"
