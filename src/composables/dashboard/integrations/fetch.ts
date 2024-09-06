@@ -36,7 +36,6 @@ export const useFetchIntegrations = () => {
 }
 
 const setIntergrationCookie = (data: Record<string, any>[]) => {
-    console.log(data)
     if (!data.length) return
 
     const googleCalIntegration = data.find((integration) => integration.id === 'google_calendar')

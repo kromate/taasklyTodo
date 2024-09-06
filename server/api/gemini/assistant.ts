@@ -234,7 +234,6 @@ export default defineEventHandler(async (event) => {
 		if (functionCalls && functionCalls.length > 0 && calendarLinked) {
 			for (const functionCall of functionCalls) {
 				const { name, args } = functionCall
-				console.log(name, args)
 				if (name in functions) {
 					const functionResult = await functions[name](args)
 					response += `\n\nFunction called: ${name}\nResult: ${functionResult}`

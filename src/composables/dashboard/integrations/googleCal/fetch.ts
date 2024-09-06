@@ -20,8 +20,6 @@ export const useFetchUserGoogleCalEvents = () => {
                 const { data, error: fetchError } = await useFetch('/api/googleCal/fetch', {
                     method: 'GET'
                 }) as { data: Ref<string>, error: any }
-
-                console.log(data)
             } catch (e) {
                 throw new Error('No response received from the server')
             }

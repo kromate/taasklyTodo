@@ -7,11 +7,16 @@
 		</header>
 
 		<section>
-			<input type="text" class="input-field" placeholder="Enter a todo for the day">
+			<div class="relative">
+				<input type="text" class="input-field" placeholder="Enter a todo for the day">
+				<button class="absolute right-2 top-1/2 -translate-y-1/2">
+					<PlusCircle />
+				</button>
+			</div>
 		</section>
 
 		<draggable
-			v-if="false"
+			v-if="tasks.length > 0"
 			:list="tasks"
 			group="tasks"
 			item-key="id"
@@ -19,7 +24,7 @@
 			@change="updateTasks"
 		>
 			<template #item="{ element }">
-				<ColumnCard
+				<PagesDashboardTodosColumnCard
 					:key="element.id"
 					:task="element"
 					@edit="editTask"
@@ -37,12 +42,9 @@
 </template>
 
 <script setup lang="ts">
-
-
 import { format, parseISO } from 'date-fns'
 import draggable from 'vuedraggable'
-import { ListTodo } from 'lucide-vue-next'
-import ColumnCard from './columnCard.vue'
+import { ListTodo, PlusCircle } from 'lucide-vue-next'
 import { Task } from '@/composables/types'
 
 
@@ -57,7 +59,7 @@ const props = defineProps({
   }
 })
 
-console.log(props)
+
 
 const emit = defineEmits<{(e: 'add-task', date: string, task: Task): void;
   (e: 'update-task', date: string, taskId: string | null, updatedTask:Task[]): void;

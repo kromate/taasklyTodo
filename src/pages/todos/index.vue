@@ -8,8 +8,6 @@
 				:tasks="column.tasks"
 			/>
 		</main>
-
-		{{ }}
 	</div>
 </template>
 

@@ -6,7 +6,6 @@ export default defineEventHandler(async (event) => {
   const clientId = import.meta.env.G_AUTH_CLIENT_ID
   const clientSecret = import.meta.env.G_AUTH_CLIENT_SECRET
 
-  console.log(clientId, clientSecret)
   const cookies = parseCookies(event).currentGoogleCalToken
   if (!cookies) {
     throw createError({ statusCode: 401, message: 'No token found, Connect your google calendar' })
@@ -44,7 +43,6 @@ export default defineEventHandler(async (event) => {
       maxResults: 2500 // Increased to ensure we get all events for the month
     })
 
-    console.log(`Fetched ${response.data.items?.length} events for ${startOfMonth.toLocaleString('default', { month: 'long' })} ${year}`)
 
     return {
       statusCode: 200,

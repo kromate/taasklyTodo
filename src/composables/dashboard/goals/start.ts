@@ -1,8 +1,7 @@
+import { nanoid } from 'nanoid'
 import { useAlert } from '@/composables/core/notification'
 import { useDashboardModal } from '@/composables/core/modals'
 import { updateFirestoreDocument } from '@/firebase/firestore/edit'
-
-
 
 const start_date = ref()
 const goalDetails = ref()
@@ -31,33 +30,36 @@ export const useStartGoal = () => {
 
 
 const createMilestone = async () => {
-        try {
-            const { data, error: fetchError } = await useFetch('/api/gemini/chat', {
-                method: 'POST',
-                body: JSON.stringify({
-                    prompt: JSON.stringify({
-                        goal: goalDetails.value.desc,
-                        steps: JSON.stringify(goalDetails.value.steps),
-                        start_date: start_date.value
-                    }),
-                    promptType: 'SMART_MILESTONE'
-                })
-            }) as { data: Ref<string>, error: any }
+    try {
+        const { data, error: fetchError } = await useFetch('/api/gemini/chat', {
+            method: 'POST',
+            body: JSON.stringify({
+                prompt: JSON.stringify({
+                    goal: goalDetails.value.desc,
+                    steps: JSON.stringify(goalDetails.value.steps),
+                    start_date: start_date.value
+                }),
+                promptType: 'SMART_MILESTONE'
+            })
+        }) as { data: Ref<string>, error: any }
 
-            if (fetchError.value) {
-                throw new Error(fetchError.value.message || 'An error occurred while fetching data for the milestone')
-            }
-
-            if (data.value === undefined) {
-                throw new Error('No response received from the server for the milestone')
-            }
-
-
-            milestones.value = JSON.parse(data.value).milestones
-        } catch (e:any) {
-            useAlert().openAlert({ type: 'ERROR', msg: e instanceof Error ? e.message : 'An unexpected error occurred, please try again' })
-            throw new Error(e)
+        if (fetchError.value) {
+            throw new Error(fetchError.value.message || 'An error occurred while fetching data for the milestone')
         }
+
+        if (data.value === undefined) {
+            throw new Error('No response received from the server for the milestone')
+        }
+
+
+        milestones.value = JSON.parse(data.value).milestones.map((milestone: any) => ({
+            ...milestone,
+            id: nanoid()
+        }))
+    } catch (e:any) {
+        useAlert().openAlert({ type: 'ERROR', msg: e instanceof Error ? e.message : 'An unexpected error occurred, please try again' })
+        throw new Error(e)
+    }
 }
 
 const createTodo = async () => {
@@ -75,20 +77,23 @@ const createTodo = async () => {
             })
         }) as { data: Ref<string>, error: any }
 
-            if (fetchError.value) {
-                throw new Error(fetchError.value.message || 'An error occurred while fetching data for the todo')
-            }
+        if (fetchError.value) {
+            throw new Error(fetchError.value.message || 'An error occurred while fetching data for the todo')
+        }
 
-            if (data.value === undefined) {
-                throw new Error('No response received from the server for the todo')
-            }
+        if (data.value === undefined) {
+            throw new Error('No response received from the server for the todo')
+        }
 
-        todos.value = JSON.parse(data.value).todos
-        } catch (e:any) {
+        todos.value = JSON.parse(data.value).todos.map((todo: any) => ({
+            ...todo,
+            id: nanoid()
+        }))
+    } catch (e:any) {
         useAlert().openAlert({ type: 'ERROR', msg: e instanceof Error ? e.message : 'An unexpected error occurred, please try again' })
         throw new Error(e)
-        }
     }
+}
 
 
 const updateGoalDocument = async () => {

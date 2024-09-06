@@ -30,18 +30,26 @@ export const fetchAllUserActiveTodos = () => {
         const groupedTasks = {} as Record<string, any>
         const activeTodo = usersActiveGoal.value.map((goal: any) => goal.todos).flat()
 
-
-        activeTodo.forEach((todo) => {
-            const date = new Date(todo.due_date).toISOString()
-
-            if (groupedTasks[date]) {
-                groupedTasks[date].tasks.push(todo)
-            } else {
-                groupedTasks[date] = { date, tasks: [todo] }
-            }
+        // Generate dates for the current week
+        const today = new Date()
+        const currentWeekDates = Array.from({ length: 7 }, (_, i) => {
+            const date = new Date(today)
+            date.setDate(today.getDate() - today.getDay() + i)
+            return date.toISOString().split('T')[0]
         })
 
+        // Initialize groupedTasks with empty arrays for each day of the week
+        currentWeekDates.forEach((date) => {
+            groupedTasks[date] = { date, tasks: [] }
+        })
 
+        // Add todos to their respective dates
+        activeTodo.forEach((todo) => {
+            const date = new Date(todo.due_date).toISOString().split('T')[0]
+            if (groupedTasks[date]) {
+                groupedTasks[date].tasks.push(todo)
+            }
+        })
 
         return Object.values(groupedTasks)
     })
